@@ -1,0 +1,155 @@
+[
+  {
+    "id": 1764518643910,
+    "timestamp": "11/30/2025, 5:04:03 PM",
+    "name": "layla",
+    "phone": "0987654323",
+    "description": "nedin some help on my bussnis",
+    "createdAt": "2025-11-30T16:04:03.910Z"
+  },
+  {
+    "id": 1764519185327,
+    "timestamp": "11/30/2025, 5:13:05 PM",
+    "name": "mohamed salem",
+    "phone": "0638086688",
+    "description": "text here evry thing he whant broker",
+    "selectedFeatures": [],
+    "totalPrice": null,
+    "estimatedDelivery": null,
+    "createdAt": "2025-11-30T16:13:05.327Z"
+  },
+  {
+    "id": 1764519364954,
+    "timestamp": "11/30/2025, 5:16:04 PM",
+    "name": "ilyass daoudi",
+    "phone": "06606060606",
+    "description": "haha broker dropy fi bla bla bla",
+    "selectedFeatures": [],
+    "totalPrice": null,
+    "estimatedDelivery": null,
+    "createdAt": "2025-11-30T16:16:04.954Z"
+  },
+  {
+    "id": 1764519443540,
+    "timestamp": "11/30/2025, 5:17:23 PM",
+    "name": "testing",
+    "phone": "01234565432",
+    "description": "ola senioraita bella show",
+    "selectedFeatures": [
+      {
+        "id": "cms",
+        "name": "Admin Dashboard (CMS)",
+        "price": 1000
+      },
+      {
+        "id": "seo",
+        "name": "Advanced SEO",
+        "price": 500
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      },
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "anim",
+        "name": "Advanced Animations",
+        "price": 400
+      }
+    ],
+    "totalPrice": 6500,
+    "estimatedDelivery": "10-14 Days",
+    "createdAt": "2025-11-30T16:17:23.541Z"
+  },
+  {
+    "id": 1764530827580,
+    "timestamp": "11/30/2025, 8:27:07 PM",
+    "name": "maery",
+    "phone": "098743345",
+    "description": "lala laskdfbdvbv",
+    "selectedFeatures": [],
+    "totalPrice": 2000,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2025-11-30T19:27:12.212Z"
+  },
+  {
+    "id": 1764530890555,
+    "timestamp": "11/30/2025, 8:28:10 PM",
+    "name": "nino",
+    "phone": "0917384785",
+    "description": "puta ninp sololaka",
+    "selectedFeatures": [],
+    "totalPrice": 2000,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2025-11-30T19:28:10.556Z"
+  },
+  {
+    "id": 1764535670103,
+    "timestamp": "11/30/2025, 9:47:50 PM",
+    "name": "nino",
+    "phone": "0999999999999",
+    "description": "Selected Options:\n• Multi-language (+600 DH)\n• Advanced Animations (+400 DH)\n• AI Chatbot (+1200 DH)\n• Payment Gateway (+800 DH)\n\nTotal Price: 5000 DH",
+    "selectedFeatures": [
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
+      },
+      {
+        "id": "anim",
+        "name": "Advanced Animations",
+        "price": 400
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      }
+    ],
+    "totalPrice": 5000,
+    "estimatedDelivery": "10-14 Days",
+    "createdAt": "2025-11-30T20:47:50.207Z"
+  },
+  {
+    "id": 1764538143849,
+    "timestamp": "11/30/2025, 10:29:03 PM",
+    "name": "omar",
+    "phone": "0900000000000",
+    "description": "Selected Options:\n• Admin Dashboard (CMS) (+1000 DH)\n• Advanced SEO (+500 DH)\n• Payment Gateway (+800 DH)\n\nTotal Price: 4300 DH",
+    "selectedFeatures": [
+      {
+        "id": "cms",
+        "name": "Admin Dashboard (CMS)",
+        "price": 1000
+      },
+      {
+        "id": "seo",
+        "name": "Advanced SEO",
+        "price": 500
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      }
+    ],
+    "totalPrice": 4300,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2025-11-30T21:29:19.533Z"
+  }
+]
