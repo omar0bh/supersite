@@ -151,5 +151,37 @@
     "totalPrice": 4300,
     "estimatedDelivery": "5-7 Days",
     "createdAt": "2025-11-30T21:29:19.533Z"
+  },
+  {
+    "id": 1764629511216,
+    "timestamp": "12/1/2025, 11:51:51 PM",
+    "name": "عمر بوحنانه",
+    "phone": "06999999999",
+    "description": "Selected Options:\n• Advanced Animations (+400 DH)\n• AI Chatbot (+1200 DH)\n• Multi-language (+600 DH)\n• Payment Gateway (+800 DH)\n\nTotal Price: 5000 DH",
+    "selectedFeatures": [
+      {
+        "id": "anim",
+        "name": "Advanced Animations",
+        "price": 400
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      }
+    ],
+    "totalPrice": 5000,
+    "estimatedDelivery": "10-14 Days",
+    "createdAt": "2025-12-01T22:51:51.295Z"
   }
 ]
