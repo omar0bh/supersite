@@ -183,5 +183,27 @@
     "totalPrice": 5000,
     "estimatedDelivery": "10-14 Days",
     "createdAt": "2025-12-01T22:51:51.295Z"
+  },
+  {
+    "id": 1764632030675,
+    "timestamp": "12/2/2025, 12:33:50 AM",
+    "name": "ilyass",
+    "phone": "09000000000",
+    "description": "Selected Options:\n• Admin Dashboard (CMS) (+1000 DH)\n• Payment Gateway (+800 DH)\n\nTotal Price: 3800 DH",
+    "selectedFeatures": [
+      {
+        "id": "cms",
+        "name": "Admin Dashboard (CMS)",
+        "price": 1000
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      }
+    ],
+    "totalPrice": 3800,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2025-12-01T23:33:50.786Z"
   }
 ]

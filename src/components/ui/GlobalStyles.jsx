@@ -170,6 +170,35 @@ const GlobalStyles = () => (
 
     .scrollbar-hide::-webkit-scrollbar { display: none; }
     .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Professional Video Frame Animations */
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    @keyframes scan {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100%); }
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { opacity: 0.3; filter: blur(40px); }
+      50% { opacity: 0.6; filter: blur(60px); }
+    }
+
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient-shift 3s ease infinite;
+    }
+
+    .animate-scan {
+      animation: scan 3s linear infinite;
+    }
+
+    .animate-glow {
+      animation: glow-pulse 4s ease-in-out infinite;
+    }
   `}</style>
 );
 
