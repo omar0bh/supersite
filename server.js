@@ -6,9 +6,11 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const { body, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 const app = express();
-const PORT = process.env.SERVER_PORT || 3003;
+// Heroku sets PORT automatically, fallback to 3003 for local
+const PORT = process.env.PORT || process.env.SERVER_PORT || 3003;
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 // Security: Check if API key is set
@@ -16,6 +18,15 @@ if (!GEMINI_API_KEY) {
   console.error('ERROR: GEMINI_API_KEY is not set in environment variables!');
   console.error('Please create a .env file with GEMINI_API_KEY=your_key_here');
   process.exit(1);
+}
+
+// Validate environment variables
+if (!process.env.ALLOWED_ORIGINS) {
+  console.warn('⚠️  WARNING: ALLOWED_ORIGINS not set. Using default localhost for development.');
+  if (process.env.NODE_ENV === 'production') {
+    console.error('ERROR: ALLOWED_ORIGINS is required in production!');
+    process.exit(1);
+  }
 }
 
 // Security Middleware
@@ -31,8 +42,18 @@ app.use(helmet({
   crossOriginEmbedderPolicy: false,
 }));
 
-// CORS Configuration - Only allow specific origins
-const allowedOrigins = (process.env.ALLOWED_ORIGINS ).split(',');
+// CORS Configuration - Separate origins for public and admin
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim()).filter(origin => origin.length > 0)
+  : ['http://localhost:3000', 'http://localhost:3001'];
+
+const adminOrigins = process.env.ADMIN_ORIGINS
+  ? process.env.ADMIN_ORIGINS.split(',').map(origin => origin.trim()).filter(origin => origin.length > 0)
+  : ['http://localhost:3001', 'http://localhost:3002'];
+
+// Combine all allowed origins
+const allAllowedOrigins = [...new Set([...allowedOrigins, ...adminOrigins])];
+
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -41,10 +62,10 @@ app.use(cors({
     if (process.env.NODE_ENV === 'development' && origin.startsWith('http://localhost:')) {
       return callback(null, true);
     }
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    if (allAllowedOrigins.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
-      console.error(`CORS blocked origin: ${origin}. Allowed origins: ${allowedOrigins.join(', ')}`);
+      console.error(`CORS blocked origin: ${origin}. Allowed origins: ${allAllowedOrigins.join(', ')}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -91,6 +112,183 @@ const validateAIRequest = [
   body('type').optional().isIn(['json', 'text']),
 ];
 
+// ============================================
+// AUTHENTICATION & SECURITY
+// ============================================
+
+// JWT Secret - MUST be set in production
+const JWT_SECRET = process.env.JWT_SECRET || 'CHANGE_THIS_IN_PRODUCTION_' + Date.now();
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+  console.error('⚠️  WARNING: JWT_SECRET not set! Using insecure default. Set JWT_SECRET in .env for production!');
+}
+
+// Admin credentials - Move to environment variables for security
+const ADMIN_CREDENTIALS = {
+  username: process.env.ADMIN_USERNAME || 'OMARADMIN',
+  password: process.env.ADMIN_PASSWORD || 'bouhanana2006sh', // ⚠️ CHANGE THIS IN PRODUCTION!
+};
+
+// Rate limiter for admin login (stricter)
+const adminLoginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // Only 5 login attempts per 15 minutes
+  message: 'Too many login attempts, please try again later.',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Authentication middleware for admin endpoints
+const authenticateAdmin = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ 
+        error: 'Unauthorized', 
+        message: 'No token provided. Please login first.' 
+      });
+    }
+    
+    const token = authHeader.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ 
+        error: 'Unauthorized', 
+        message: 'Invalid token format.' 
+      });
+    }
+    
+    try {
+      const decoded = jwt.verify(token, JWT_SECRET);
+      
+      // Verify it's an admin token
+      if (decoded.role !== 'admin') {
+        return res.status(403).json({ 
+          error: 'Forbidden', 
+          message: 'Admin access required.' 
+        });
+      }
+      
+      req.admin = decoded;
+      next();
+    } catch (error) {
+      if (error.name === 'TokenExpiredError') {
+        return res.status(401).json({ 
+          error: 'Unauthorized', 
+          message: 'Token expired. Please login again.' 
+        });
+      }
+      return res.status(401).json({ 
+        error: 'Unauthorized', 
+        message: 'Invalid token.' 
+      });
+    }
+  } catch (error) {
+    console.error('Authentication error:', error);
+    return res.status(500).json({ 
+      error: 'Internal server error', 
+      message: 'Authentication failed.' 
+    });
+  }
+};
+
+// Admin login endpoint
+app.post('/api/admin/login', adminLoginLimiter, [
+  body('username').trim().notEmpty().withMessage('Username is required'),
+  body('password').trim().notEmpty().withMessage('Password is required'),
+], async (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ 
+        error: 'Validation failed', 
+        details: errors.array() 
+      });
+    }
+    
+    const { username, password } = req.body;
+    
+    // Validate credentials
+    if (username === ADMIN_CREDENTIALS.username && 
+        password === ADMIN_CREDENTIALS.password) {
+      
+      // Generate JWT token
+      const token = jwt.sign(
+        { 
+          username: username, 
+          role: 'admin',
+          iat: Math.floor(Date.now() / 1000)
+        },
+        JWT_SECRET,
+        { expiresIn: '24h' } // Token expires in 24 hours
+      );
+      
+      console.log(`✓ Admin login successful: ${username}`);
+      
+      res.json({ 
+        success: true, 
+        token,
+        expiresIn: '24h'
+      });
+    } else {
+      console.warn(`⚠️  Failed login attempt for username: ${username}`);
+      // Don't reveal which field is wrong for security
+      res.status(401).json({ 
+        error: 'Invalid credentials', 
+        message: 'Username or password is incorrect.' 
+      });
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    res.status(500).json({ 
+      error: 'Login failed', 
+      message: 'An error occurred during login.' 
+    });
+  }
+});
+
+// Helper function to safely read/write JSON database
+const readOffersDatabase = () => {
+  const dbPath = path.join(__dirname, 'offers-database.json');
+  try {
+    if (!fs.existsSync(dbPath)) {
+      return [];
+    }
+    const data = fs.readFileSync(dbPath, 'utf8');
+    if (!data || data.trim().length === 0) {
+      return [];
+    }
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading database:', error);
+    // Return empty array if file is corrupted
+    return [];
+  }
+};
+
+const writeOffersDatabase = (offers) => {
+  const dbPath = path.join(__dirname, 'offers-database.json');
+  try {
+    // Create backup before writing
+    if (fs.existsSync(dbPath)) {
+      const backupPath = `${dbPath}.backup`;
+      fs.copyFileSync(dbPath, backupPath);
+    }
+    fs.writeFileSync(dbPath, JSON.stringify(offers, null, 2), 'utf8');
+    return true;
+  } catch (error) {
+    console.error('Error writing database:', error);
+    throw error;
+  }
+};
+
+// TODO: Add authentication middleware for admin endpoints
+// const authenticateAdmin = (req, res, next) => {
+//   // Implement JWT/session authentication here
+//   // For now, admin endpoints are unprotected (SECURITY RISK)
+//   next();
+// };
+
 // SAVE OFFER TO JSON DATABASE ONLY
 app.post('/api/save-offer', validateOffer, (req, res) => {
   try {
@@ -99,12 +297,8 @@ app.post('/api/save-offer', validateOffer, (req, res) => {
       return res.status(400).json({ error: 'Validation failed', details: errors.array() });
     }
     const { name, phone, description, selectedFeatures, totalPrice, estimatedDelivery } = req.body;
-    const dbPath = path.join(__dirname, 'offers-database.json');
-    let offers = [];
-    if (fs.existsSync(dbPath)) {
-      const data = fs.readFileSync(dbPath, 'utf8');
-      offers = JSON.parse(data);
-    }
+    
+    const offers = readOffersDatabase();
     const newOffer = {
       id: Date.now(),
       timestamp: new Date().toLocaleString(),
@@ -117,12 +311,12 @@ app.post('/api/save-offer', validateOffer, (req, res) => {
       createdAt: new Date().toISOString()
     };
     offers.push(newOffer);
-    fs.writeFileSync(dbPath, JSON.stringify(offers, null, 2));
+    writeOffersDatabase(offers);
     console.log(`✓ SAVED TO JSON: ${newOffer.name} | Features: ${selectedFeatures?.length || 0} | Price: ${totalPrice || 2000} DH`);
     res.json({ success: true, message: 'Saved to database', offerId: newOffer.id });
   } catch (error) {
     console.error('ERROR saving:', error);
-    res.status(500).json({ error: 'Failed to save' });
+    res.status(500).json({ error: 'Failed to save', message: error.message });
   }
 });
 
@@ -283,25 +477,15 @@ app.post('/api/ai/chat', strictLimiter, async (req, res) => {
   }
 });
 
-// Endpoint to get all offers (for admin dashboard) - Reads from JSON database
-app.get('/api/get-offers', (req, res) => {
+// Endpoint to get all offers (for admin dashboard) - PROTECTED
+app.get('/api/get-offers', authenticateAdmin, (req, res) => {
   try {
-    const dbPath = path.join(__dirname, 'offers-database.json');
-    
-    // Check if database file exists
-    if (!fs.existsSync(dbPath)) {
-      console.log('⚠️  Database file not found, returning empty array');
-      return res.json({ success: true, data: [] });
-    }
-
-    // Read and parse JSON database
-    const data = fs.readFileSync(dbPath, 'utf8');
-    const offers = JSON.parse(data);
+    const offers = readOffersDatabase();
     
     // Return offers in reverse order (newest first)
     const sortedOffers = offers.sort((a, b) => b.id - a.id);
     
-    console.log(`✓ Fetched ${sortedOffers.length} offers from JSON database`);
+    console.log(`✓ Admin ${req.admin.username} fetched ${sortedOffers.length} offers`);
     
     res.json({ success: true, data: sortedOffers });
   } catch (error) {
@@ -310,30 +494,28 @@ app.get('/api/get-offers', (req, res) => {
   }
 });
 
-// DELETE OFFER ENDPOINT - Deletes from database by ID
-app.delete('/api/delete-offer/:id', (req, res) => {
+// DELETE OFFER ENDPOINT - PROTECTED
+app.delete('/api/delete-offer/:id', authenticateAdmin, (req, res) => {
   try {
     const offerId = parseInt(req.params.id);
-    const dbPath = path.join(__dirname, 'offers-database.json');
     
-    if (!fs.existsSync(dbPath)) {
-      return res.status(404).json({ error: 'Database not found' });
+    if (isNaN(offerId)) {
+      return res.status(400).json({ error: 'Invalid offer ID' });
     }
 
-    const data = fs.readFileSync(dbPath, 'utf8');
-    const offers = JSON.parse(data);
+    const offers = readOffersDatabase();
     const filteredOffers = offers.filter(offer => offer.id !== offerId);
     
     if (filteredOffers.length === offers.length) {
       return res.status(404).json({ error: 'Offer not found' });
     }
 
-    fs.writeFileSync(dbPath, JSON.stringify(filteredOffers, null, 2));
-    console.log(`✓ DELETED offer ID: ${offerId} from database`);
+    writeOffersDatabase(filteredOffers);
+    console.log(`✓ Admin ${req.admin.username} deleted offer ID: ${offerId}`);
     res.json({ success: true, message: 'Deleted successfully' });
   } catch (error) {
     console.error('ERROR deleting offer:', error);
-    res.status(500).json({ error: 'Failed to delete' });
+    res.status(500).json({ error: 'Failed to delete', message: error.message });
   }
 });
 

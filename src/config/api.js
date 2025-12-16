@@ -1,6 +1,9 @@
 // API endpoints - API key is now secured on the backend
 // DO NOT put API keys in frontend code!
 
+// API Configuration
+// In production, set REACT_APP_API_URL to your backend URL
+// Default matches server.js port (3003) for development
 export const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:3003/api';
 
 // API endpoints

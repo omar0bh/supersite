@@ -9,11 +9,9 @@ import AITools from './components/sections/AITools';
 import PricingCalculator from './components/sections/PricingCalculator';
 import Contact from './components/sections/Contact';
 import TemplateModal from './components/modals/TemplateModal';
-import AdminDashboard from './components/pages/AdminDashboard';
 
 const App = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const [currentPage, setCurrentPage] = useState('home');
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
     return localStorage.getItem('devsite-theme') || 'dark';
@@ -24,47 +22,17 @@ const App = () => {
     localStorage.setItem('devsite-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    const checkHash = () => {
-      if (window.location.hash === '#admin') {
-        setCurrentPage('admin');
-      } else {
-        setCurrentPage('home');
-      }
-    };
-    
-    checkHash();
-    window.addEventListener('hashchange', checkHash);
-    return () => window.removeEventListener('hashchange', checkHash);
-  }, []);
-
   const scrollToSection = (id) => {
-    if (id === 'admin') {
-      window.location.hash = 'admin';
-      setCurrentPage('admin');
-    } else {
-      window.location.hash = '';
-      setCurrentPage('home');
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) element.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    }
+    window.location.hash = '';
+    setTimeout(() => {
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
-
-  if (currentPage === 'admin') {
-    return (
-      <div className="min-h-screen antialiased bg-[var(--color-bg)] text-[var(--text-primary)] transition-colors duration-500">
-        <GlobalStyles />
-        <Navbar onNavigate={scrollToSection} theme={theme} onToggleTheme={toggleTheme} />
-        <AdminDashboard />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen antialiased bg-[var(--color-bg)] text-[var(--text-primary)] transition-colors duration-500">

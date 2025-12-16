@@ -7,15 +7,13 @@ const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // --- START FIX: Define Navigation Items and their target IDs ---
+  // Navigation Items - Admin removed for security (separate admin dashboard)
   const navItems = [
     { name: 'Demos', id: 'demos' },
-    { name: 'Services', id: 'case-studies' }, // Corrected ID: Links to CaseStudies.jsx
+    { name: 'Services', id: 'case-studies' },
     { name: 'AI Tools', id: 'ai-tools' },
     { name: 'Pricing', id: 'pricing' },
-    { name: 'Admin', id: 'admin' },
   ];
- // --- END FIX ---
 
   useEffect(() => {
      const handleScroll = () => setScrolled(window.scrollY > 20);
