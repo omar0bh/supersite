@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Bot, Menu, Moon, Sun } from 'lucide-react';
 import Button from '../ui/Button';
 
+
+
 const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);

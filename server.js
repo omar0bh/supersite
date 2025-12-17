@@ -38,7 +38,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "https:"],
       fontSrc: ["'self'", "data:"],
-      connectSrc: ["'self'", "https:"]
+      connectSrc: ["'self'", "https://supertech-37365290ed5d.herokuapp.com"]
     },
   },
   crossOriginEmbedderPolicy: false,
