@@ -34,9 +34,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
+     scriptSrc: ["'self'", "'unsafe-inline'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
       imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "data:"],
+      connectSrc: ["'self'", "https:"]
     },
   },
   crossOriginEmbedderPolicy: false,
@@ -546,6 +548,15 @@ app.use('/api/*', (req, res) => {
     ]
   });
 });
+
+if(process.env.NODE_ENV === 'production'){
+  const buildPath = path.join(__dirname, 'build');
+  app.use(express.static(buildPath));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(buildPath, 'index.html'));
+  });
+}
 
 app.listen(PORT, () => {
   console.log(`✓ Secure server running on http://localhost:${PORT}`);
