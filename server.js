@@ -133,7 +133,7 @@ if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
 // Admin credentials - Move to environment variables for security
 const ADMIN_CREDENTIALS = {
   username: process.env.ADMIN_USERNAME || 'OMARADMIN',
-  password: process.env.ADMIN_PASSWORD || 'bouhanana2006sh', // ⚠️ CHANGE THIS IN PRODUCTION!
+  password: process.env.ADMIN_PASSWORD || 'OMAR0091bh%', // ⚠️ CHANGE THIS IN PRODUCTION!
 };
 
 // Rate limiter for admin login (stricter)
