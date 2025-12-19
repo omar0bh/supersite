@@ -40,12 +40,12 @@ const App = () => {
       <SocialProofToast />
 
       <a
-        href="https://wa.me/+212688892894"
+        href="https://wa.me/+212761551686"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 z-50 bg-[var(--accent-secondary)] text-[var(--primary)] p-4 rounded-full shadow-[0_20px_45px_rgba(63,224,197,0.35)] hover:scale-110 transition-all duration-300 flex items-center gap-2 group border border-[var(--border-color)]"
       >
-        <svg className="animate-bounce" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M21 7L9 19l-5-5"/></svg>
+        <svg className="animate-bounce" width="24" height="24" viewBox="0 0 24 24"><path fill="white" d="M21 7L9 19l-5-5" /></svg>
         <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-500 whitespace-nowrap font-bold">WhatsApp Us</span>
       </a>
 

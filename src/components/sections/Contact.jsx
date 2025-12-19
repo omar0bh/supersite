@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Phone, Mail, CheckCircle, XCircle, MessageSquare } from 'lucide-react';
 import Button from '../ui/Button';
 import StarRating from '../ui/StarRating';
@@ -21,14 +21,23 @@ const Contact = () => {
   const [feedbackErrorMessage, setFeedbackErrorMessage] = useState('');
   const [contactErrorMessage, setContactErrorMessage] = useState('');
 
+  const lastSyncedSignature = useRef('');
+
   // Load data from localStorage - check continuously
   useEffect(() => {
     const loadPricingData = () => {
       try {
         const savedOptions = localStorage.getItem('selectedOptions');
         const savedPrice = localStorage.getItem('finalPrice');
+        const currentSignature = savedOptions + '-' + savedPrice;
 
         if (savedOptions && savedPrice) {
+          // Only update if data has actually changed
+          if (currentSignature === lastSyncedSignature.current) {
+            return;
+          }
+          lastSyncedSignature.current = currentSignature;
+
           const selectedOptions = JSON.parse(savedOptions);
           const finalPrice = parseInt(savedPrice, 10);
 
