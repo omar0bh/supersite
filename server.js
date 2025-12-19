@@ -34,10 +34,10 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-     scriptSrc: ["'self'", "'unsafe-inline'"],
+     scriptSrc: ["'self'", "'unsafe-inline'" , "'https://fonts.googleapis.com'"],
       styleSrc: ["'self'", "'unsafe-inline'"],
       imgSrc: ["'self'", "data:", "https:"],
-      fontSrc: ["'self'", "data:"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
       connectSrc: ["'self'", "https://supertech-37365290ed5d.herokuapp.com"]
     },
   },
@@ -104,6 +104,12 @@ const validateOffer = [
   body('name').trim().isLength({ min: 2, max: 100 }),
   body('phone').trim().isLength({ min: 5, max: 20 }),
   body('description').trim().isLength({ min: 10, max: 2000 }),
+];
+
+const validateFeedback = [
+  body('name').trim().isLength({ min: 2, max: 100 }),
+  body('feedback').trim().isLength({ min: 10, max: 2000 }),
+  body('rating').isInt({ min: 1, max: 5 }).withMessage('Rating must be between 1 and 5'),
 ];
 
 const validateAIRequest = [
@@ -284,6 +290,40 @@ const writeOffersDatabase = (offers) => {
   }
 };
 
+// Helper functions for feedback database
+const readFeedbackDatabase = () => {
+  const dbPath = path.join(__dirname, 'feedback-database.json');
+  try {
+    if (!fs.existsSync(dbPath)) {
+      return [];
+    }
+    const data = fs.readFileSync(dbPath, 'utf8');
+    if (!data || data.trim().length === 0) {
+      return [];
+    }
+    return JSON.parse(data);
+  } catch (error) {
+    console.error('Error reading feedback database:', error);
+    return [];
+  }
+};
+
+const writeFeedbackDatabase = (feedback) => {
+  const dbPath = path.join(__dirname, 'feedback-database.json');
+  try {
+    // Create backup before writing
+    if (fs.existsSync(dbPath)) {
+      const backupPath = `${dbPath}.backup`;
+      fs.copyFileSync(dbPath, backupPath);
+    }
+    fs.writeFileSync(dbPath, JSON.stringify(feedback, null, 2), 'utf8');
+    return true;
+  } catch (error) {
+    console.error('Error writing feedback database:', error);
+    throw error;
+  }
+};
+
 // TODO: Add authentication middleware for admin endpoints
 // const authenticateAdmin = (req, res, next) => {
 //   // Implement JWT/session authentication here
@@ -319,6 +359,34 @@ app.post('/api/save-offer', validateOffer, (req, res) => {
   } catch (error) {
     console.error('ERROR saving:', error);
     res.status(500).json({ error: 'Failed to save', message: error.message });
+  }
+});
+
+// SAVE FEEDBACK TO JSON DATABASE
+app.post('/api/save-feedback', validateFeedback, (req, res) => {
+  try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ error: 'Validation failed', details: errors.array() });
+    }
+    const { name, feedback, rating } = req.body;
+    
+    const feedbackList = readFeedbackDatabase();
+    const newFeedback = {
+      id: Date.now(),
+      timestamp: new Date().toLocaleString(),
+      name: sanitizeInput(name),
+      feedback: sanitizeInput(feedback),
+      rating: parseInt(rating, 10),
+      createdAt: new Date().toISOString()
+    };
+    feedbackList.push(newFeedback);
+    writeFeedbackDatabase(feedbackList);
+    console.log(`✓ FEEDBACK SAVED: ${newFeedback.name} | Rating: ${rating}/5`);
+    res.json({ success: true, message: 'Feedback saved successfully', feedbackId: newFeedback.id });
+  } catch (error) {
+    console.error('ERROR saving feedback:', error);
+    res.status(500).json({ error: 'Failed to save feedback', message: error.message });
   }
 });
 

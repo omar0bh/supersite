@@ -2,10 +2,22 @@
 // DO NOT put API keys in frontend code!
 
 // API Configuration
-// In production, set REACT_APP_API_URL to your backend URL
-// Default matches server.js port (3003) for development
-export const API_BASE_URL = 
-    process.env.REACT_APP_API_URL || 'http://localhost:3003';
+// Automatically detect development vs production
+const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const defaultUrl = isDevelopment ? 'http://localhost:3003' : 'https://supertech-37365290ed5d.herokuapp.com';
+const baseUrl = process.env.REACT_APP_API_URL || defaultUrl;
+// Remove trailing slash to prevent double slashes
+export const API_BASE_URL = baseUrl.replace(/\/+$/, '');
+
+// Debug: Log API URL in development
+if (isDevelopment) {
+  console.log('🔧 API Configuration:', {
+    hostname: window.location.hostname,
+    envVar: process.env.REACT_APP_API_URL || 'not set',
+    using: API_BASE_URL,
+    isDevelopment
+  });
+}
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -15,4 +27,5 @@ export const API_ENDPOINTS = {
   SAVE_OFFER: `${API_BASE_URL}/api/save-offer`,
   GET_OFFERS: `${API_BASE_URL}/api/get-offers`,
   DELETE_OFFER: `${API_BASE_URL}/api/delete-offer`,
+  SAVE_FEEDBACK: `${API_BASE_URL}/api/save-feedback`,
 };

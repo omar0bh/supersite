@@ -12,7 +12,7 @@ const AITools = () => {
   const [generatedCopy, setGeneratedCopy] = useState('');
   const [chatInput, setChatInput] = useState('');
   const [chatHistory, setChatHistory] = useState([
-    { role: 'ai', text: "Hi there! I'm Super. I can help you choose a template, explain our pricing, or suggest the best tech stack. How can I help?" }
+    { role: 'ai', text: "Hi there! I'm Super. I can help you choose a template, explain our pricing, or suggest the best Site stack. How can I help?" }
   ]);
 
   const chatEndRef = useRef(null);
@@ -208,57 +208,57 @@ const AITools = () => {
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] -z-10"></div>
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 mb-4 text-violet-400 font-bold tracking-widest uppercase text-sm">
+          <div className="inline-flex items-center gap-2 mb-4 text-[var(--accent-primary)] font-bold tracking-widest uppercase text-sm">
             <Bot size={16} /> Exclusive Technology
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold">AI Agency Tools</h2>
-          <p className="text-slate-400 mt-4">Experience the power of Gemini AI before you even hire us.</p>
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)]">AI Agency Tools</h2>
+          <p className="text-[var(--text-secondary)] mt-4">Experience the power of Gemini AI before you even hire us.</p>
         </div>
 
-        <div className="glass-panel max-w-4xl mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
-          <div className="flex flex-col md:flex-row border-b border-white/10">
-            <button onClick={() => setActiveAiTab('estimator')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 ${activeAiTab === 'estimator' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-white'}`}><Calendar size={18} /> Project Estimator</button>
-            <button onClick={() => setActiveAiTab('copy')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 ${activeAiTab === 'copy' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-white'}`}><PenTool size={18} /> AI Copy Generator</button>
-            <button onClick={() => setActiveAiTab('chat')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 ${activeAiTab === 'chat' ? 'bg-white/10 text-white' : 'text-slate-500 hover:text-white'}`}><MessageCircle size={18} /> Smart Support</button>
+        <div className="glass-panel max-w-4xl mx-auto rounded-3xl overflow-hidden border border-[var(--border-color)] shadow-2xl">
+          <div className="flex flex-col md:flex-row border-b border-[var(--border-color)]">
+            <button onClick={() => setActiveAiTab('estimator')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 transition-colors ${activeAiTab === 'estimator' ? 'bg-[var(--surface-muted)] text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}><Calendar size={18} /> Project Estimator</button>
+            <button onClick={() => setActiveAiTab('copy')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 transition-colors ${activeAiTab === 'copy' ? 'bg-[var(--surface-muted)] text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}><PenTool size={18} /> AI Copy Generator</button>
+            <button onClick={() => setActiveAiTab('chat')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 transition-colors ${activeAiTab === 'chat' ? 'bg-[var(--surface-muted)] text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}><MessageCircle size={18} /> Smart Support</button>
           </div>
 
           <div className="p-8 min-h-[400px] flex flex-col">
             {activeAiTab === 'estimator' && (
               <div>
-                <h3 className="text-2xl font-bold mb-4">Get an Instant Quote</h3>
-                <p className="text-slate-400 mb-6">Describe your project and our AI will recommend the stack, price, and timeline.</p>
+                <h3 className="text-2xl font-bold mb-4 text-[var(--text-primary)]">Get an Instant Quote</h3>
+                <p className="text-[var(--text-secondary)] mb-6">Describe your project and our AI will recommend the stack, price, and timeline.</p>
                 <form onSubmit={(e) => { e.preventDefault(); handleEstimator(); }} className="flex gap-2 mb-6">
                   <input type="text" value={quoteInput} onChange={(e) => setQuoteInput(e.target.value)} placeholder="Describe your project..." className="flex-1 rounded-xl px-4 py-3 outline-none input-field" />
                   <Button type="submit" variant="neon" disabled={isProcessing}>{isProcessing ? <Loader className="animate-spin" /> : "Analyze"}</Button>
                 </form>
 
                 {aiResult && typeof aiResult === 'object' && (
-                  <div className={`rounded-xl p-6 border-l-4 ${aiResult.error ? 'bg-red-500/10 border-red-500' : 'bg-white/5 border-violet-500'}`}>
-                    {aiResult.error ? (
-                      <div className="text-red-400">
+                  <div className={`rounded-xl p-6 border-l-4 ${aiResult.error ? 'bg-red-500/10 border-red-500' : 'bg-[var(--surface-muted)] border-[var(--accent-primary)]'}`}>
+                        {aiResult.error ? (
+                      <div className="text-red-500">
                         <p className="font-bold mb-2">Error:</p>
                         <p>{aiResult.message}</p>
-                        <p className="text-sm mt-2 text-slate-400">Make sure the server is running: <code className="px-2 py-1 rounded input-field inline-block">npm run server</code></p>
+                        <p className="text-sm mt-2 text-[var(--text-secondary)]">Make sure the server is running: <code className="px-2 py-1 rounded input-field inline-block">npm run server</code></p>
                       </div>
                     ) : (
                       <>
                         <div className="flex justify-between items-start mb-4">
                           <div>
-                            <div className="text-sm text-slate-400 uppercase font-bold">Recommended Plan</div>
-                            <div className="text-2xl font-bold text-violet-400">{aiResult.package || 'N/A'}</div>
+                            <div className="text-sm text-[var(--text-secondary)] uppercase font-bold">Recommended Plan</div>
+                            <div className="text-2xl font-bold text-[var(--accent-primary)]">{aiResult.package || 'N/A'}</div>
                           </div>
                           <div className="text-right">
-                            <div className="text-sm text-slate-400 uppercase font-bold">Est. Price</div>
-                            <div className="text-2xl font-bold text-white">{aiResult.price || 'N/A'}</div>
+                            <div className="text-sm text-[var(--text-secondary)] uppercase font-bold">Est. Price</div>
+                            <div className="text-2xl font-bold text-[var(--text-primary)]">{aiResult.price || 'N/A'}</div>
                           </div>
                         </div>
-                        <div className="grid grid-cols-2 gap-4 text-sm text-slate-300 mb-4">
+                        <div className="grid grid-cols-2 gap-4 text-sm text-[var(--text-primary)] mb-4">
                           <div className="surface-muted p-2 rounded">⏳ {aiResult.time || 'N/A'}</div>
                           <div className="surface-muted p-2 rounded">💻 {aiResult.stack || 'N/A'}</div>
                         </div>
                         <div className="mt-4">
-                          <div className="text-sm text-slate-400 uppercase font-bold mb-2">Key Features</div>
-                          <ul className="list-disc list-inside space-y-1 text-sm text-slate-300">
+                          <div className="text-sm text-[var(--text-secondary)] uppercase font-bold mb-2">Key Features</div>
+                          <ul className="list-disc list-inside space-y-1 text-sm text-[var(--text-primary)]">
                             {Array.isArray(aiResult.features)
                               ? aiResult.features.map((f, i) => <li key={i}>{String(f)}</li>)
                               : <li>{String(aiResult.features)}</li>}
@@ -273,16 +273,16 @@ const AITools = () => {
 
             {activeAiTab === 'copy' && (
               <div>
-                <h3 className="text-2xl font-bold mb-4">AI Headline Generator</h3>
-                <p className="text-slate-400 mb-6">Stuck on content? Let our AI write your website's hero section instantly.</p>
+                <h3 className="text-2xl font-bold mb-4 text-[var(--text-primary)]">AI Headline Generator</h3>
+                <p className="text-[var(--text-secondary)] mb-6">Stuck on content? Let our AI write your website's hero section instantly.</p>
                 <form onSubmit={(e) => { e.preventDefault(); handleCopyGen(); }} className="flex gap-2 mb-6">
                   <input type="text" value={copyTopic} onChange={(e) => setCopyTopic(e.target.value)} placeholder="What is your business about?" className="flex-1 rounded-xl px-4 py-3 outline-none input-field" />
                   <Button type="submit" variant="neon" disabled={isProcessing}>{isProcessing ? <Loader className="animate-spin" /> : "Generate"}</Button>
                 </form>
                 {generatedCopy && typeof generatedCopy === 'string' && (
-                  <div className="bg-white/5 rounded-xl p-6 border border-white/10 relative group">
+                  <div className="bg-[var(--surface-muted)] rounded-xl p-6 border border-[var(--border-color)] relative group">
                     {generatedCopy.split('|').map((part, index) => (
-                      <p key={index} className={`font-medium ${index === 0 ? 'text-xl text-white mb-2' : 'text-lg italic text-slate-300'}`}>
+                      <p key={index} className={`font-medium ${index === 0 ? 'text-xl text-[var(--text-primary)] mb-2' : 'text-lg italic text-[var(--text-secondary)]'}`}>
                         {String(part).trim()}
                       </p>
                     ))}
@@ -293,19 +293,19 @@ const AITools = () => {
 
             {activeAiTab === 'chat' && (
               <div className="flex flex-col h-full">
-                <h3 className="text-2xl font-bold mb-2">Chat with Super</h3>
+                <h3 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Chat with Super</h3>
                 <div ref={chatContainerRef} className="flex-1 rounded-xl p-4 mb-4 overflow-y-auto max-h-[300px] scrollbar-hide surface-muted">
                   {chatHistory.map((msg, idx) => (
                     <div key={idx} className={`mb-4 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                      <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-violet-600 text-white rounded-tr-none' : 'bg-white/10 text-slate-200 rounded-tl-none'}`}>
+                      <div className={`max-w-[80%] p-3 rounded-2xl ${msg.role === 'user' ? 'bg-[var(--accent-primary)] text-white rounded-tr-none' : 'bg-[var(--surface-muted)] text-[var(--text-primary)] rounded-tl-none border border-[var(--border-color)]'}`}>
                         {String(msg.text)}
                       </div>
                     </div>
                   ))}
                   {isProcessing && (
                     <div className="flex justify-start mb-4">
-                      <div className="bg-white/10 p-3 rounded-2xl rounded-tl-none max-w-[80%]">
-                        <Loader size={20} className="animate-spin text-slate-400" />
+                      <div className="bg-[var(--surface-muted)] p-3 rounded-2xl rounded-tl-none max-w-[80%] border border-[var(--border-color)]">
+                        <Loader size={20} className="animate-spin text-[var(--text-secondary)]" />
                       </div>
                     </div>
                   )}
@@ -314,7 +314,7 @@ const AITools = () => {
 
                 <form onSubmit={handleChatSubmit} className="flex gap-2">
                   <input type="text" value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder="Ask a question..." className="flex-1 rounded-xl px-4 py-3 outline-none input-field" />
-                  <button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white p-3 rounded-xl transition-colors disabled:opacity-50" disabled={isProcessing}><Send size={20} /></button>
+                  <button type="submit" className="bg-[var(--accent-primary)] hover:opacity-90 text-white p-3 rounded-xl transition-colors disabled:opacity-50" disabled={isProcessing}><Send size={20} /></button>
                 </form>
               </div>
             )}

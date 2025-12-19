@@ -34,7 +34,7 @@ heroku config:set GEMINI_API_KEY=your_actual_gemini_key_here
 heroku config:set JWT_SECRET=wgnBUWEfHoilE12EqtpjrTuHzdO2YsWS1YF4YRLqaII=
 heroku config:set ADMIN_USERNAME=OMARADMIN
 heroku config:set ADMIN_PASSWORD=OMAR0091bh%
-heroku config:set ALLOWED_ORIGINS=https://yoursite.vercel.app,https://www.yoursite.com
+heroku config:set ALLOWED_ORIGINS=https://supersite-b36dcfb401af.herokuapp.com
 heroku config:set ADMIN_ORIGINS=https://admin-yoursite.vercel.app
 
 # Initialize git (if not already)

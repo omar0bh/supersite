@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Phone, Mail, CheckCircle, XCircle } from 'lucide-react';
+import { Phone, Mail, CheckCircle, XCircle, MessageSquare } from 'lucide-react';
 import Button from '../ui/Button';
+import StarRating from '../ui/StarRating';
 import { API_ENDPOINTS } from '../../config/api';
 
 const Contact = () => {
@@ -10,6 +11,14 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [pricingData, setPricingData] = useState(null);
+  
+  // Feedback states
+  const [feedbackName, setFeedbackName] = useState('');
+  const [feedbackText, setFeedbackText] = useState('');
+  const [feedbackRating, setFeedbackRating] = useState(0);
+  const [isSubmittingFeedback, setIsSubmittingFeedback] = useState(false);
+  const [feedbackStatus, setFeedbackStatus] = useState(null);
+  const [feedbackErrorMessage, setFeedbackErrorMessage] = useState('');
 
   // Load data from localStorage - check continuously
   useEffect(() => {
@@ -125,6 +134,75 @@ const Contact = () => {
     }
   };
 
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!feedbackName.trim() || !feedbackText.trim() || feedbackRating === 0) {
+      setFeedbackStatus('error');
+      setTimeout(() => setFeedbackStatus(null), 3000);
+      return;
+    }
+
+    setIsSubmittingFeedback(true);
+    setFeedbackStatus(null);
+
+    try {
+      const feedbackData = {
+        name: feedbackName.trim(),
+        feedback: feedbackText.trim(),
+        rating: feedbackRating,
+        timestamp: new Date().toISOString(),
+      };
+
+      const response = await fetch(API_ENDPOINTS.SAVE_FEEDBACK, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(feedbackData),
+      });
+
+      if (response && response.ok) {
+        setFeedbackName('');
+        setFeedbackText('');
+        setFeedbackRating(0);
+        setFeedbackStatus('success');
+        setTimeout(() => setFeedbackStatus(null), 5000);
+      } else {
+        setFeedbackStatus('error');
+        setTimeout(() => setFeedbackStatus(null), 3000);
+      }
+    } catch (error) {
+      console.error('Error saving feedback:', error);
+      let errorMessage = 'Failed to submit feedback.';
+      
+      // Better error messages based on error type
+      const errorString = String(error.message || error).toLowerCase();
+      
+      if (errorString.includes('failed to fetch') || errorString.includes('networkerror') || error.name === 'TypeError') {
+        // Check if trying to connect to Heroku from localhost (CORS issue)
+        if (API_ENDPOINTS.SAVE_FEEDBACK.includes('herokuapp.com') && window.location.hostname === 'localhost') {
+          errorMessage = 'CORS Error: Using Heroku URL from localhost. For local development, make sure your .env has REACT_APP_API_URL=http://localhost:3003 and restart the app.';
+        } else if (API_ENDPOINTS.SAVE_FEEDBACK.includes('localhost')) {
+          errorMessage = 'Cannot connect to server. Make sure the server is running: npm run server';
+        } else {
+          errorMessage = 'Network error. Please check your connection or try again later.';
+        }
+      } else if (errorString.includes('cors')) {
+        errorMessage = 'CORS error detected. If running locally, ensure REACT_APP_API_URL=http://localhost:3003 in your .env file.';
+      }
+      
+      setFeedbackErrorMessage(errorMessage);
+      setFeedbackStatus('error');
+      setTimeout(() => {
+        setFeedbackStatus(null);
+        setFeedbackErrorMessage('');
+      }, 6000);
+    } finally {
+      setIsSubmittingFeedback(false);
+    }
+  };
+
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
@@ -135,11 +213,11 @@ const Contact = () => {
               <div className="space-y-6">
                  <div className="flex items-center gap-4">
                    <div className="w-12 h-12 rounded-full icon-bubble flex items-center justify-center text-[var(--accent-primary)]"><Phone/></div>
-                   <div><div className="text-sm text-[var(--text-secondary)]">Call Us</div><div className="font-bold text-[var(--text-primary)]">+212 6XX-XXXXXX</div></div>
+                   <div><div className="text-sm text-[var(--text-secondary)]">Call Us</div><div className="font-bold text-[var(--text-primary)]">+212761551689</div></div>
                  </div>
                  <div className="flex items-center gap-4">
                    <div className="w-12 h-12 rounded-full icon-bubble flex items-center justify-center text-[var(--accent-secondary)]"><Mail/></div>
-                   <div><div className="text-sm text-[var(--text-secondary)]">Email Us</div><div className="font-bold text-[var(--text-primary)]">hello@SuperTech.ma</div></div>
+                   <div><div className="text-sm text-[var(--text-secondary)]">Email Us</div><div className="font-bold text-[var(--text-primary)]">SuperSite@SuperSite.ma</div></div>
                  </div>
               </div>
            </div>
@@ -211,6 +289,89 @@ const Contact = () => {
                </div>
              </form>
            </div>
+        </div>
+
+        {/* Feedback Section */}
+        <div className="mt-12 glass-panel rounded-2xl p-6 md:p-8">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center gap-2 mb-2 text-[var(--accent-primary)]">
+              <MessageSquare size={20} />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-bold text-[var(--text-primary)] mb-2">
+              Share Your Experience
+            </h3>
+            <p className="text-[var(--text-secondary)] text-sm max-w-xl mx-auto">
+              Your feedback helps us improve!
+            </p>
+          </div>
+
+          <form onSubmit={handleFeedbackSubmit} className="max-w-xl mx-auto space-y-4">
+            <div>
+              <input
+                type="text"
+                placeholder="Your name"
+                value={feedbackName}
+                onChange={(e) => setFeedbackName(e.target.value)}
+                className="w-full rounded-xl px-4 py-3 outline-none input-field text-sm"
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2">
+                <StarRating
+                  rating={feedbackRating}
+                  onRatingChange={setFeedbackRating}
+                  disabled={isSubmittingFeedback}
+                />
+              </div>
+              {feedbackRating === 0 && (
+                <p className="text-xs text-[var(--text-secondary)]">
+                  Please select a rating
+                </p>
+              )}
+            </div>
+
+            <div>
+              <textarea
+                placeholder="Tell us what you think..."
+                rows="3"
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                className="w-full rounded-xl px-4 py-3 outline-none input-field resize-none text-sm"
+                required
+              ></textarea>
+            </div>
+
+            <div className="space-y-2">
+              <Button
+                type="submit"
+                variant="neon"
+                className="w-full py-3 text-base"
+                disabled={isSubmittingFeedback || feedbackRating === 0}
+              >
+                {isSubmittingFeedback ? 'Submitting...' : 'Submit Feedback'}
+              </Button>
+              
+              {feedbackStatus === 'success' && (
+                <div className="flex items-center gap-2 text-[var(--accent-secondary)] text-xs">
+                  <CheckCircle size={14} />
+                  <span>Thank you for your feedback!</span>
+                </div>
+              )}
+              
+              {feedbackStatus === 'error' && (
+                <div className="flex items-center gap-2 text-red-400 text-xs">
+                  <XCircle size={14} />
+                  <span>
+                    {feedbackRating === 0
+                      ? 'Please select a rating before submitting.'
+                      : feedbackErrorMessage || 'Failed to submit. Make sure the server is running.'}
+                  </span>
+                </div>
+              )}
+            </div>
+          </form>
         </div>
       </div>
     </section>

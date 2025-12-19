@@ -41,7 +41,7 @@ const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
              <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg shadow-violet-500/30 bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)]">
              <Bot size={24} />
              </div>
-           <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">Super<span className="text-[var(--accent-primary)]">Tech</span></span>
+           <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">Super<span className="text-[var(--accent-primary)]">Site</span></span>
          </div>
 
         {/* Desktop Navigation */}
