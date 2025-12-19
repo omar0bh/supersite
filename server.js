@@ -34,11 +34,11 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-     scriptSrc: ["'self'", "'unsafe-inline'" , "'https://fonts.googleapis.com'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+      scriptSrc: ["'self'", "'unsafe-inline'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "https:"],
-      fontSrc: ["'self'", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "https://supertech-37365290ed5d.herokuapp.com"]
+      fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
+      connectSrc: ["'self'", "https://supertech-37365290ed5d.herokuapp.com", "wss:", "ws:"]
     },
   },
   crossOriginEmbedderPolicy: false,
