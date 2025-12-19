@@ -69,6 +69,7 @@ const Contact = () => {
           setDescription(formattedText);
         } else {
           // No pricing data found (expected if user came directly to contact)
+          setPricingData(null);
         }
       } catch (error) {
         console.error('❌ Error loading pricing data:', error);
@@ -129,6 +130,7 @@ const Contact = () => {
         setDescription('');
         localStorage.removeItem('selectedOptions');
         localStorage.removeItem('finalPrice');
+        setPricingData(null); // Clear the UI box immediately
         setSubmitStatus('success');
         setTimeout(() => setSubmitStatus(null), 3000);
       } else {
