@@ -59,7 +59,7 @@ const Contact = () => {
           // Set the formatted text in description
           setDescription(formattedText);
         } else {
-          console.log('⚠️ NO PRICING DATA IN LOCALSTORAGE');
+          // No pricing data found (expected if user came directly to contact)
         }
       } catch (error) {
         console.error('❌ Error loading pricing data:', error);
