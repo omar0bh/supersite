@@ -3,6 +3,7 @@ import GlobalStyles from './components/ui/GlobalStyles';
 import SocialProofToast from './components/ui/SocialProofToast';
 import Navbar from './components/Layout/Navbar';
 import Hero from './components/sections/Hero';
+import TechnologyStack from './components/sections/TechnologyStack';
 import TemplateStore from './components/sections/TemplateStore';
 import CaseStudies from './components/sections/CaseStudies';
 import AITools from './components/sections/AITools';
@@ -51,6 +52,7 @@ const App = () => {
 
       <Navbar onNavigate={scrollToSection} theme={theme} onToggleTheme={toggleTheme} />
       <Hero onNavigate={scrollToSection} />
+      <TechnologyStack />
       <TemplateStore onSelectTemplate={setSelectedTemplate} />
       <CaseStudies />
       <AITools />
