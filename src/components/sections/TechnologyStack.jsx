@@ -1,5 +1,6 @@
 import React from 'react';
 import { Code2, Database, Globe, Smartphone, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const TechnologyStack = () => {
   const technologies = [
@@ -33,14 +34,20 @@ const TechnologyStack = () => {
   return (
     <section id="technology-stack" className="py-24 relative overflow-hidden" style={{ backgroundColor: 'var(--surface-primary)' }}>
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
             Our Technology Stack
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
             We leverage cutting-edge technologies to build fast, scalable, and modern websites that deliver exceptional user experiences.
           </p>
-        </div>
+        </motion.div>
 
         {/* Scrolling Animation Container */}
         <div className="relative overflow-hidden">
@@ -51,7 +58,7 @@ const TechnologyStack = () => {
                 className="flex-shrink-0 mx-4 group"
                 style={{ minWidth: '200px' }}
               >
-                <div 
+                <div
                   className="rounded-2xl p-6 transition-all duration-300 hover:scale-105"
                   style={{
                     backgroundColor: 'var(--surface-muted)',
@@ -68,7 +75,7 @@ const TechnologyStack = () => {
                   }}
                 >
                   <div className="flex flex-col items-center text-center">
-                    <div 
+                    <div
                       className="mb-3 transition-colors"
                       style={{ color: 'var(--accent-primary)' }}
                     >
@@ -87,7 +94,7 @@ const TechnologyStack = () => {
 
         {/* Additional Info Section */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div 
+          <div
             className="text-center p-6 rounded-xl"
             style={{
               backgroundColor: 'var(--surface-muted)',
@@ -98,7 +105,7 @@ const TechnologyStack = () => {
             <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>Technologies</div>
             <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>In our toolkit</div>
           </div>
-          <div 
+          <div
             className="text-center p-6 rounded-xl"
             style={{
               backgroundColor: 'var(--surface-muted)',
@@ -109,7 +116,7 @@ const TechnologyStack = () => {
             <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>Modern Stack</div>
             <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Latest frameworks</div>
           </div>
-          <div 
+          <div
             className="text-center p-6 rounded-xl"
             style={{
               backgroundColor: 'var(--surface-muted)',

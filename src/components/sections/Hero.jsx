@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sparkles, Eye, Bot, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Button from '../ui/Button';
 
 const Hero = ({ onNavigate }) => (
@@ -12,13 +13,19 @@ const Hero = ({ onNavigate }) => (
     <div className="container mx-auto px-6 relative z-10">
       <div className="flex flex-col lg:flex-row items-center gap-12">
         {/* Left Side: Text + CTA */}
-        <div className="lg:w-1/2 text-center lg:text-left">
+        <motion.div
+          className="lg:w-1/2 text-center lg:text-left"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full pill text-xs font-bold uppercase tracking-widest mb-6 text-[var(--accent-primary)]">
             <Sparkles size={12} /> AI-Powered Web Agency
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-8 text-transparent bg-clip-text bg-gradient-to-b from-[var(--text-primary)] to-[var(--text-secondary)]">
-            Web Design <br/> from the <span className="neon-text text-[var(--accent-primary)]">Future.</span>
+            Web Design <br /> from the <span className="neon-text text-[var(--accent-primary)]">Future.</span>
           </h1>
 
           <p className="text-xl text-[var(--text-secondary)] mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -29,19 +36,25 @@ const Hero = ({ onNavigate }) => (
             <Button onClick={() => onNavigate('demos')} variant="primary" icon={Eye}>View Demos</Button>
             <Button onClick={() => onNavigate('ai-tools')} variant="magic" icon={Bot}>Try AI Tools</Button>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Side: Video */}
-        <div className="lg:w-1/2 w-full relative perspective-1000">
+        <motion.div
+          className="lg:w-1/2 w-full relative perspective-1000"
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="relative w-full max-w-lg mx-auto float">
-            
+
             {/* Animated Glow Background */}
             <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-30 blur-2xl animate-pulse"></div>
-            
+
             {/* Outer Frame with Gradient Border */}
             <div className="relative rounded-3xl p-[3px] bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 animate-gradient">
               <div className="rounded-3xl bg-[var(--color-bg)] overflow-hidden">
-                
+
                 {/* Video Container with Professional Frame */}
                 <div className="relative rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
                   {/* Corner Accents */}
@@ -71,11 +84,11 @@ const Hero = ({ onNavigate }) => (
 
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none"></div>
-                  
+
                   {/* Scan Line Effect */}
                   <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent animate-scan pointer-events-none"></div>
                 </div>
-                
+
               </div>
             </div>
 
@@ -87,7 +100,7 @@ const Hero = ({ onNavigate }) => (
           {/* Optional floating panels on top of video */}
           <div className="absolute -right-8 top-20 p-4 glass-panel rounded-2xl animate-bounce delay-700">
             <div className="flex items-center gap-3">
-              <div className="icon-bubble text-[var(--accent-secondary)] p-2 rounded-lg"><Zap size={20}/></div>
+              <div className="icon-bubble text-[var(--accent-secondary)] p-2 rounded-lg"><Zap size={20} /></div>
               <div>
                 <div className="text-xs text-[var(--text-secondary)]">Performance</div>
                 <div className="font-bold text-[var(--text-primary)]">99/100</div>
@@ -97,7 +110,7 @@ const Hero = ({ onNavigate }) => (
 
           <div className="absolute -left-8 bottom-20 p-4 glass-panel rounded-2xl animate-bounce delay-300">
             <div className="flex items-center gap-3">
-              <div className="icon-bubble text-[var(--accent-primary)] p-2 rounded-lg"><Bot size={20}/></div>
+              <div className="icon-bubble text-[var(--accent-primary)] p-2 rounded-lg"><Bot size={20} /></div>
               <div>
                 <div className="text-xs text-[var(--text-secondary)]">AI Integration</div>
                 <div className="font-bold text-[var(--text-primary)]">Active</div>
@@ -105,7 +118,7 @@ const Hero = ({ onNavigate }) => (
             </div>
           </div>
 
-        </div>
+        </motion.div>
       </div>
     </div>
   </section>

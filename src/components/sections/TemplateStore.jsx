@@ -1,16 +1,29 @@
 import React from 'react';
 import { Eye } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { templates } from '../../config/data';
 
 const TemplateStore = ({ onSelectTemplate }) => (
   <section id="demos" className="py-32 relative bg-[var(--section-bg)] transition-colors duration-500">
     <div className="container mx-auto px-6">
-      <div className="text-center mb-16">
+      <motion.div
+        className="text-center mb-16"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+      >
         <h2 className="text-4xl md:text-5xl font-bold mb-6 text-[var(--text-primary)]">Pre-Built <span className="text-[var(--accent-primary)]">Masterpieces</span></h2>
         <p className="text-[var(--text-secondary)] max-w-2xl mx-auto">Don't start from scratch. Choose a premium industry template and we'll customize it to perfection in 48 hours.</p>
-      </div>
+      </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+      >
         {templates.map((temp) => {
           const Icon = temp.icon;
           return (
@@ -39,7 +52,7 @@ const TemplateStore = ({ onSelectTemplate }) => (
             </div>
           );
         })}
-      </div>
+      </motion.div>
     </div>
   </section>
 );

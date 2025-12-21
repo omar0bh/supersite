@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Phone, Mail, CheckCircle, XCircle, MessageSquare } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Button from '../ui/Button';
 import StarRating from '../ui/StarRating';
 import { API_ENDPOINTS } from '../../config/api';
@@ -230,7 +231,13 @@ const Contact = () => {
   return (
     <section id="contact" className="py-32 relative overflow-hidden">
       <div className="container mx-auto px-6 relative z-10">
-        <div className="glass-panel rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row gap-16">
+        <motion.div
+          className="glass-panel rounded-[3rem] p-8 md:p-16 flex flex-col lg:flex-row gap-16"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="lg:w-1/2">
             <h2 className="text-4xl md:text-6xl font-bold mb-8 text-[var(--text-primary)]">Let's build the <br /> <span className="text-[var(--accent-primary)]">Extraordinary.</span></h2>
             <p className="text-[var(--text-secondary)] text-lg mb-12">Ready to dominate your market? Send us a message.</p>
@@ -313,10 +320,16 @@ const Contact = () => {
               </div>
             </form>
           </div>
-        </div>
+        </motion.div>
 
         {/* Feedback Section */}
-        <div className="mt-12 glass-panel rounded-2xl p-6 md:p-8">
+        <motion.div
+          className="mt-12 glass-panel rounded-2xl p-6 md:p-8"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <div className="text-center mb-6">
             <div className="inline-flex items-center gap-2 mb-2 text-[var(--accent-primary)]">
               <MessageSquare size={20} />
@@ -396,7 +409,7 @@ const Contact = () => {
               )}
             </div>
           </form>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

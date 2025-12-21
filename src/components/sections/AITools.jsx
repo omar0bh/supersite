@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Bot, Calendar, PenTool, MessageCircle, Loader, Send } from 'lucide-react';
+import { motion } from 'framer-motion';
 import Button from '../ui/Button';
 import { API_ENDPOINTS } from '../../config/api';
 
@@ -21,7 +22,7 @@ const AITools = () => {
   useEffect(() => {
     // Only scroll if we're on the chat tab
     if (activeAiTab !== 'chat') return;
-    
+
     // Use setTimeout to ensure DOM has updated
     const timeoutId = setTimeout(() => {
       if (chatContainerRef.current && chatEndRef.current) {
@@ -44,7 +45,7 @@ const AITools = () => {
     try {
       console.log('Sending request to:', API_ENDPOINTS.AI_ESTIMATE);
       console.log('Request body:', { prompt: quoteInput });
-      
+
       const response = await fetch(API_ENDPOINTS.AI_ESTIMATE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,17 +58,17 @@ const AITools = () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         console.error('Error response:', errorData);
-        
+
         if (response.status === 404) {
           throw new Error('Server endpoint not found. Make sure the server is running: npm run server');
         }
-        
+
         throw new Error(errorData.error || errorData.message || `Server error: ${response.status}`);
       }
-      
+
       const result = await response.json();
       console.log('Success result:', result);
-      
+
       if (result.success && result.data) {
         setAiResult(result.data);
       } else {
@@ -76,16 +77,16 @@ const AITools = () => {
     } catch (error) {
       console.error("AI Estimate Error:", error);
       let errorMessage = error.message || 'Failed to connect to AI service.';
-      
+
       // Better error detection for network issues
       if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError') || error.name === 'TypeError') {
         errorMessage = 'Cannot connect to server. Make sure the server is running: npm run server';
       } else if (error.message?.includes('CORS')) {
         errorMessage = 'CORS error. Server configuration issue.';
       }
-      
-      setAiResult({ 
-        error: true, 
+
+      setAiResult({
+        error: true,
         message: errorMessage
       });
     } finally {
@@ -101,7 +102,7 @@ const AITools = () => {
     try {
       console.log('Sending copy request to:', API_ENDPOINTS.AI_COPY);
       console.log('Request body:', { prompt: copyTopic });
-      
+
       const response = await fetch(API_ENDPOINTS.AI_COPY, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -113,17 +114,17 @@ const AITools = () => {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         console.error('Copy error response:', errorData);
-        
+
         if (response.status === 404) {
           throw new Error('Server endpoint not found. Make sure the server is running: npm run server');
         }
-        
+
         throw new Error(errorData.error || errorData.message || `Server error: ${response.status}`);
       }
-      
+
       const result = await response.json();
       console.log('Copy success result:', result);
-      
+
       if (result.success && result.data) {
         setGeneratedCopy(result.data);
       } else {
@@ -132,14 +133,14 @@ const AITools = () => {
     } catch (error) {
       console.error("AI Copy Error:", error);
       let errorMessage = error.message || 'Failed to connect to AI service.';
-      
+
       // Better error detection for network issues
       if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError') || error.name === 'TypeError') {
         errorMessage = 'Cannot connect to server. Make sure the server is running: npm run server';
       } else if (error.message?.includes('CORS')) {
         errorMessage = 'CORS error. Server configuration issue.';
       }
-      
+
       setGeneratedCopy(`Error: ${errorMessage}`);
     } finally {
       setIsProcessing(false);
@@ -153,7 +154,7 @@ const AITools = () => {
     const userMsg = chatInput.trim();
     // Create updated chat history with the new user message
     const updatedHistory = [...chatHistory, { role: 'user', text: userMsg }];
-    
+
     // Update UI immediately
     setChatHistory(updatedHistory);
     setChatInput('');
@@ -173,7 +174,7 @@ const AITools = () => {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `Server error: ${response.status}`);
       }
-      
+
       const result = await response.json();
       if (result.success && result.data) {
         setChatHistory(prev => [...prev, { role: 'ai', text: String(result.data) }]);
@@ -184,7 +185,7 @@ const AITools = () => {
       console.error("Chat API Error:", error);
       // Show error message while keeping the user's message
       let errorMessage = "I'm sorry, I encountered an error. Please try again.";
-      
+
       // Better error detection for network issues
       if (error.message?.includes('Failed to fetch') || error.message?.includes('NetworkError') || error.name === 'TypeError') {
         errorMessage = "Cannot connect to server. Make sure the server is running: npm run server";
@@ -193,9 +194,9 @@ const AITools = () => {
       } else if (error.message) {
         errorMessage = `Error: ${error.message}`;
       }
-      
-      setChatHistory(prev => [...prev, { 
-        role: 'ai', 
+
+      setChatHistory(prev => [...prev, {
+        role: 'ai',
         text: errorMessage
       }]);
     } finally {
@@ -207,15 +208,27 @@ const AITools = () => {
     <section id="ai-tools" className="py-32 relative">
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[120px] -z-10"></div>
       <div className="container mx-auto px-6">
-        <div className="text-center mb-12">
+        <motion.div
+          className="text-center mb-12"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
           <div className="inline-flex items-center gap-2 mb-4 text-[var(--accent-primary)] font-bold tracking-widest uppercase text-sm">
             <Bot size={16} /> Exclusive Technology
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)]">AI Agency Tools</h2>
           <p className="text-[var(--text-secondary)] mt-4">Experience the power of Gemini AI before you even hire us.</p>
-        </div>
+        </motion.div>
 
-        <div className="glass-panel max-w-4xl mx-auto rounded-3xl overflow-hidden border border-[var(--border-color)] shadow-2xl">
+        <motion.div
+          className="glass-panel max-w-4xl mx-auto rounded-3xl overflow-hidden border border-[var(--border-color)] shadow-2xl"
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
           <div className="flex flex-col md:flex-row border-b border-[var(--border-color)]">
             <button onClick={() => setActiveAiTab('estimator')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 transition-colors ${activeAiTab === 'estimator' ? 'bg-[var(--surface-muted)] text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}><Calendar size={18} /> Project Estimator</button>
             <button onClick={() => setActiveAiTab('copy')} className={`flex-1 py-4 font-bold flex items-center justify-center gap-2 transition-colors ${activeAiTab === 'copy' ? 'bg-[var(--surface-muted)] text-[var(--text-primary)]' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}><PenTool size={18} /> AI Copy Generator</button>
@@ -234,7 +247,7 @@ const AITools = () => {
 
                 {aiResult && typeof aiResult === 'object' && (
                   <div className={`rounded-xl p-6 border-l-4 ${aiResult.error ? 'bg-red-500/10 border-red-500' : 'bg-[var(--surface-muted)] border-[var(--accent-primary)]'}`}>
-                        {aiResult.error ? (
+                    {aiResult.error ? (
                       <div className="text-red-500">
                         <p className="font-bold mb-2">Error:</p>
                         <p>{aiResult.message}</p>
@@ -319,7 +332,7 @@ const AITools = () => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
