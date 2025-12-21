@@ -3,7 +3,7 @@ import { Sparkles, Eye, Bot, Zap } from 'lucide-react';
 import Button from '../ui/Button';
 
 const Hero = ({ onNavigate }) => (
-  <section id="hero" className="relative flex items-center pt-24 pb-16 overflow-hidden transition-colors duration-500">
+  <section id="hero" className="relative flex items-center min-h-screen pt-24 pb-16 overflow-hidden transition-colors duration-500">
     {/* Background mesh & blurred circles */}
     <div className="absolute inset-0 hero-mesh -z-10 opacity-70"></div>
     <div className="absolute top-0 right-0 w-[420px] h-[420px] rounded-full blur-[120px] -z-10 animate-pulse" style={{ backgroundColor: 'rgba(30, 144, 255, 0.2)' }}></div>
