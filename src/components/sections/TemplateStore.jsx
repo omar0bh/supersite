@@ -30,7 +30,18 @@ const TemplateStore = ({ onSelectTemplate }) => (
             <div key={temp.id} className="group relative gradient-border cursor-pointer" onClick={() => onSelectTemplate(temp)}>
               <div className="surface-muted p-1 rounded-2xl h-full">
                 <div className="surface-card rounded-xl overflow-hidden relative h-64">
-                  <div className={`absolute inset-0 bg-gradient-to-br ${temp.color} opacity-30 group-hover:opacity-50 transition-opacity`}></div>
+                  {temp.image ? (
+                    <>
+                      <img
+                        src={process.env.PUBLIC_URL + temp.image}
+                        alt={temp.name}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-colors duration-300"></div>
+                    </>
+                  ) : (
+                    <div className={`absolute inset-0 bg-gradient-to-br ${temp.color} opacity-30 group-hover:opacity-50 transition-opacity`}></div>
+                  )}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-90 group-hover:scale-100">
                     <button className="bg-[var(--accent-primary)] text-white px-6 py-3 rounded-full font-bold flex items-center gap-2 shadow-xl shadow-[var(--glow-primary)]">
                       <Eye size={18} /> Preview Demo
