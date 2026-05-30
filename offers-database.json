@@ -1,16 +1,5 @@
 [
   {
-    "id": 1764519364954,
-    "timestamp": "11/30/2025, 5:16:04 PM",
-    "name": "ilyass daoudi",
-    "phone": "06606060606",
-    "description": "haha broker dropy fi bla bla bla",
-    "selectedFeatures": [],
-    "totalPrice": null,
-    "estimatedDelivery": null,
-    "createdAt": "2025-11-30T16:16:04.954Z"
-  },
-  {
     "id": 1764519443540,
     "timestamp": "11/30/2025, 5:17:23 PM",
     "name": "testing",
@@ -197,5 +186,108 @@
     "totalPrice": 2000,
     "estimatedDelivery": "5-7 Days",
     "createdAt": "2025-12-15T23:35:12.487Z"
+  },
+  {
+    "id": 1771169242546,
+    "timestamp": "2/15/2026, 3:27:22 PM",
+    "name": "omar bouhanana",
+    "phone": "212688892894",
+    "description": "hhhhhhhhhhhhhhhhhhh",
+    "preferredContact": "email",
+    "email": "bouhananao8@gmail.com",
+    "selectedFeatures": [
+      {
+        "id": "anim",
+        "name": "Advanced Animations",
+        "price": 400
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
+      }
+    ],
+    "totalPrice": 4200,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2026-02-15T15:27:22.659Z"
+  },
+  {
+    "id": 1780182457190,
+    "timestamp": "5/31/2026, 12:07:37 AM",
+    "name": "lala 3icha",
+    "phone": "0989247753805",
+    "description": "bghitk t9adoli f assra3 wa9t",
+    "preferredContact": "whatsapp",
+    "email": "",
+    "selectedFeatures": [],
+    "totalPrice": 2000,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2026-05-30T23:07:37.321Z"
+  },
+  {
+    "id": 1780183077617,
+    "timestamp": "5/31/2026, 12:17:57 AM",
+    "name": "3abdo",
+    "phone": "212344331223",
+    "description": "bghitttoooooooooo",
+    "preferredContact": "whatsapp",
+    "email": "",
+    "selectedFeatures": [
+      {
+        "id": "seo",
+        "name": "Advanced SEO",
+        "price": 500
+      },
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
+      },
+      {
+        "id": "pay",
+        "name": "Payment Gateway",
+        "price": 800
+      },
+      {
+        "id": "cms",
+        "name": "Admin Dashboard (CMS)",
+        "price": 1000
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "anim",
+        "name": "Advanced Animations",
+        "price": 400
+      },
+      {
+        "id": "maintenance",
+        "name": "Annual Maintenance & Support",
+        "price": 1200
+      },
+      {
+        "id": "branding",
+        "name": "Design & Branding Pack (Logo & Identity)",
+        "price": 1500
+      },
+      {
+        "id": "google_ads",
+        "name": "Google Ads & Traffic Campaign Setup",
+        "price": 1800
+      }
+    ],
+    "totalPrice": 11000,
+    "estimatedDelivery": "7-10 Days",
+    "createdAt": "2026-05-30T23:17:57.698Z",
+    "status": "new",
+    "notes": ""
   }
 ]

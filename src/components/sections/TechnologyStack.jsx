@@ -1,8 +1,10 @@
 import React from 'react';
 import { Code2, Database, Globe, Smartphone, Zap } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLanguage } from '../../context/LanguageContext';
 
 const TechnologyStack = () => {
+  const { t } = useLanguage();
   const technologies = [
     { name: 'React', icon: <Code2 size={32} />, category: 'Frontend' },
     { name: 'Next.js', icon: <Zap size={32} />, category: 'Framework' },
@@ -42,10 +44,10 @@ const TechnologyStack = () => {
           transition={{ duration: 0.8 }}
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ color: 'var(--text-primary)' }}>
-            Our Technology Stack
+            {t('techStack.title')}
           </h2>
           <p className="text-lg max-w-2xl mx-auto" style={{ color: 'var(--text-secondary)' }}>
-            We leverage cutting-edge technologies to build fast, scalable, and modern websites that deliver exceptional user experiences.
+            {t('techStack.desc')}
           </p>
         </motion.div>
 
@@ -102,8 +104,8 @@ const TechnologyStack = () => {
             }}
           >
             <div className="text-3xl font-bold mb-2" style={{ color: 'var(--accent-primary)' }}>50+</div>
-            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>Technologies</div>
-            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>In our toolkit</div>
+            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>{t('techStack.gridTech')}</div>
+            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{t('techStack.gridTechDesc')}</div>
           </div>
           <div
             className="text-center p-6 rounded-xl"
@@ -113,8 +115,8 @@ const TechnologyStack = () => {
             }}
           >
             <div className="text-3xl font-bold mb-2" style={{ color: 'var(--accent-primary)' }}>100%</div>
-            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>Modern Stack</div>
-            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Latest frameworks</div>
+            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>{t('techStack.gridStack')}</div>
+            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{t('techStack.gridStackDesc')}</div>
           </div>
           <div
             className="text-center p-6 rounded-xl"
@@ -124,8 +126,8 @@ const TechnologyStack = () => {
             }}
           >
             <div className="text-3xl font-bold mb-2" style={{ color: 'var(--accent-primary)' }}>24/7</div>
-            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>Support</div>
-            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>Expert maintenance</div>
+            <div className="font-semibold" style={{ color: 'var(--text-primary)' }}>{t('techStack.gridSupport')}</div>
+            <div className="text-sm mt-1" style={{ color: 'var(--text-secondary)' }}>{t('techStack.gridSupportDesc')}</div>
           </div>
         </div>
       </div>

@@ -9,15 +9,7 @@ const baseUrl = process.env.REACT_APP_API_URL || defaultUrl;
 // Remove trailing slash to prevent double slashes
 export const API_BASE_URL = baseUrl.replace(/\/+$/, '');
 
-// Debug: Log API URL in development
-if (isDevelopment) {
-  console.log('🔧 API Configuration:', {
-    hostname: window.location.hostname,
-    envVar: process.env.REACT_APP_API_URL || 'not set',
-    using: API_BASE_URL,
-    isDevelopment
-  });
-}
+// In development, REACT_APP_API_URL can override baseUrl (default localhost:3003)
 
 // API endpoints
 export const API_ENDPOINTS = {
@@ -28,4 +20,6 @@ export const API_ENDPOINTS = {
   GET_OFFERS: `${API_BASE_URL}/api/get-offers`,
   DELETE_OFFER: `${API_BASE_URL}/api/delete-offer`,
   SAVE_FEEDBACK: `${API_BASE_URL}/api/save-feedback`,
+  FEATURED_FEEDBACK: `${API_BASE_URL}/api/featured-feedback`,
+  GET_TEMPLATES: `${API_BASE_URL}/api/get-templates`,
 };

@@ -1,127 +1,125 @@
 import React from 'react';
-import { Sparkles, Eye, Bot, Zap } from 'lucide-react';
+import { Sparkles, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Button from '../ui/Button';
+import { COMPANY, CONTACT } from '../../config/constants';
+import { useLanguage } from '../../context/LanguageContext';
 
-const Hero = ({ onNavigate }) => (
-  <section id="hero" className="relative flex items-center min-h-screen pt-24 pb-16 overflow-hidden transition-colors duration-500">
-    {/* Background mesh & blurred circles */}
-    <div className="absolute inset-0 hero-mesh -z-10 opacity-70"></div>
-    <div className="absolute top-0 right-0 w-[420px] h-[420px] rounded-full blur-[120px] -z-10 animate-pulse" style={{ backgroundColor: 'rgba(30, 144, 255, 0.2)' }}></div>
-    <div className="absolute bottom-0 left-0 w-[520px] h-[520px] rounded-full blur-[140px] -z-10" style={{ backgroundColor: 'rgba(63, 224, 197, 0.2)' }}></div>
+const Hero = ({ onNavigate, theme = 'dark' }) => {
+  const { t } = useLanguage();
+  const pillars = t('hero.pillars') || COMPANY.pillars;
 
-    <div className="container mx-auto px-6 relative z-10">
-      <div className="flex flex-col lg:flex-row items-center gap-12">
-        {/* Left Side: Text + CTA */}
+  return (
+    <section id="hero" className="relative flex items-center min-h-screen pt-24 pb-16 overflow-hidden transition-colors duration-500">
+      <div className="absolute inset-0 hero-mesh -z-10 opacity-70"></div>
+      <div className="absolute top-0 right-0 w-[420px] h-[420px] rounded-full blur-[120px] -z-10 animate-pulse" style={{ backgroundColor: 'rgba(30, 144, 255, 0.2)' }}></div>
+      <div className="absolute bottom-0 left-0 w-[520px] h-[520px] rounded-full blur-[140px] -z-10" style={{ backgroundColor: 'rgba(63, 224, 197, 0.2)' }}></div>
+
+      <div className="container mx-auto px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+          <motion.div
+            className="lg:w-1/2 text-center lg:text-left"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full pill text-xs font-bold uppercase tracking-widest mb-6 text-[var(--accent-primary)]">
+              <Sparkles size={12} /> {t('hero.badge')}
+            </div>
+
+            <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-4 text-transparent bg-clip-text bg-gradient-to-b from-[var(--text-primary)] to-[var(--text-secondary)]">
+              {t('hero.titleLine1')} <br /> {t('hero.titleLine2')} <span className="neon-text text-[var(--accent-primary)]">{t('hero.titleFuture')}</span>
+            </h1>
+
+            <p className="text-sm md:text-base text-[var(--text-secondary)] mb-6 max-w-xl mx-auto lg:mx-0">
+              {t('hero.desc1')}
+            </p>
+
+            <p className="text-xl text-[var(--text-secondary)] mb-6 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              {t('hero.desc2')}
+            </p>
+
+            <p className="text-xs md:text-sm text-[var(--text-secondary)] mb-8 opacity-90">
+              {t('hero.desc3')}
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-6">
+              <Button onClick={() => onNavigate('pricing')} variant="primary" icon={Sparkles}>{t('hero.ctaEstimate')}</Button>
+              <Button onClick={() => onNavigate('demos')} variant="outline" icon={Eye}>{t('hero.ctaPortfolio')}</Button>
+            </div>
+
+            <div className="mt-6 mb-8 border-l-2 border-[var(--accent-primary)] pl-4 py-1 text-left">
+              <p className="text-[10px] uppercase font-bold text-[var(--text-secondary)] tracking-widest">{t('hero.emailConsultation')}</p>
+              <a href={`mailto:${CONTACT.email}`} className="text-base md:text-lg font-extrabold text-[var(--text-primary)] hover:text-[var(--accent-primary)] transition-colors border-b border-dashed border-[var(--border-color)]">
+                {CONTACT.email}
+              </a>
+            </div>
+
+            <div className="flex flex-wrap gap-4 justify-center lg:justify-start text-sm text-[var(--text-secondary)]">
+              {pillars.map((pillar, i) => (
+                <span key={i} className="flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent-primary)]" />
+                  {pillar}{i < pillars.length - 1 ? ' •' : ''}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right Side: theme image – one aspect, no empty corners, same in both themes */}
+          <motion.div
+            className="lg:w-1/2 w-full flex items-center justify-start"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="hero-image-wrap relative w-full max-w-[600px] sm:max-w-[640px] aspect-[4/3] flex items-center justify-center overflow-hidden">
+              <motion.img
+                src={`${process.env.PUBLIC_URL}/white.png`}
+                alt="SuperSite – web agency"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                animate={{ opacity: theme === 'light' ? 1 : 0 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                style={{ pointerEvents: 'none' }}
+              />
+              <motion.img
+                src={`${process.env.PUBLIC_URL}/dark.png`}
+                alt="SuperSite – web agency"
+                className="absolute inset-0 w-full h-full object-cover object-center"
+                animate={{ opacity: theme === 'dark' ? 1 : 0 }}
+                transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+                style={{ pointerEvents: 'none' }}
+              />
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Real metrics bar */}
         <motion.div
-          className="lg:w-1/2 text-center lg:text-left"
-          initial={{ opacity: 0, x: -50 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          className="mt-16 pt-12 border-t flex flex-wrap justify-center gap-8 md:gap-12"
+          style={{ borderColor: 'var(--border-color)' }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full pill text-xs font-bold uppercase tracking-widest mb-6 text-[var(--accent-primary)]">
-            <Sparkles size={12} /> AI-Powered Web Agency
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[var(--accent-primary)]">{COMPANY.stats.projects}</div>
+            <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{t('hero.statsProjects')}</div>
           </div>
-
-          <h1 className="text-5xl md:text-7xl font-bold leading-tight mb-8 text-transparent bg-clip-text bg-gradient-to-b from-[var(--text-primary)] to-[var(--text-secondary)]">
-            Web Design <br /> from the <span className="neon-text text-[var(--accent-primary)]">Future.</span>
-          </h1>
-
-          <p className="text-xl text-[var(--text-secondary)] mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            We build cinematic, high-performance websites infused with Artificial Intelligence. Stop competing. Start dominating.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            <Button onClick={() => onNavigate('demos')} variant="primary" icon={Eye}>View Demos</Button>
-            <Button onClick={() => onNavigate('ai-tools')} variant="magic" icon={Bot}>Try AI Tools</Button>
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[var(--accent-secondary)]">{COMPANY.stats.satisfaction}</div>
+            <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{t('hero.statsSatisfaction')}</div>
           </div>
-        </motion.div>
-
-        {/* Right Side: Video */}
-        <motion.div
-          className="lg:w-1/2 w-full relative perspective-1000"
-          initial={{ opacity: 0, x: 50 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="relative w-full max-w-lg mx-auto float">
-
-            {/* Animated Glow Background */}
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 opacity-30 blur-2xl animate-pulse"></div>
-
-            {/* Outer Frame with Gradient Border */}
-            <div className="relative rounded-3xl p-[3px] bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 animate-gradient">
-              <div className="rounded-3xl bg-[var(--color-bg)] overflow-hidden">
-
-                {/* Video Container with Professional Frame */}
-                <div className="relative rounded-3xl overflow-hidden border-2 border-white/10 shadow-2xl">
-                  {/* Corner Accents */}
-                  <div className="absolute top-0 left-0 w-20 h-20 border-t-4 border-l-4 border-blue-500 rounded-tl-3xl z-10"></div>
-                  <div className="absolute top-0 right-0 w-20 h-20 border-t-4 border-r-4 border-cyan-500 rounded-tr-3xl z-10"></div>
-                  <div className="absolute bottom-0 left-0 w-20 h-20 border-b-4 border-l-4 border-purple-500 rounded-bl-3xl z-10"></div>
-                  <div className="absolute bottom-0 right-0 w-20 h-20 border-b-4 border-r-4 border-blue-500 rounded-br-3xl z-10"></div>
-
-                  {/* Video */}
-                  <video
-                    src={`${process.env.PUBLIC_URL}/vedio1.mp4`}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    preload="auto"
-                    className="w-full block"
-                    style={{ display: 'block', height: 'auto' }}
-                    onError={(e) => {
-                      console.error('Video failed to load:', e);
-                      e.target.style.display = 'none';
-                    }}
-                  >
-                    <source src={`${process.env.PUBLIC_URL}/vedio1.mp4`} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20 pointer-events-none"></div>
-
-                  {/* Scan Line Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent animate-scan pointer-events-none"></div>
-                </div>
-
-              </div>
-            </div>
-
-            {/* Floating Particles */}
-            <div className="absolute -top-4 -right-4 w-3 h-3 rounded-full bg-blue-500 animate-ping"></div>
-            <div className="absolute -bottom-4 -left-4 w-3 h-3 rounded-full bg-cyan-500 animate-ping delay-700"></div>
+          <div className="text-center">
+            <div className="text-2xl md:text-3xl font-bold text-[var(--text-primary)]">{COMPANY.stats.years}</div>
+            <div className="text-xs text-[var(--text-secondary)] uppercase tracking-wider">{t('hero.statsYears')}</div>
           </div>
-
-          {/* Optional floating panels on top of video */}
-          <div className="absolute -right-8 top-20 p-4 glass-panel rounded-2xl animate-bounce delay-700">
-            <div className="flex items-center gap-3">
-              <div className="icon-bubble text-[var(--accent-secondary)] p-2 rounded-lg"><Zap size={20} /></div>
-              <div>
-                <div className="text-xs text-[var(--text-secondary)]">Performance</div>
-                <div className="font-bold text-[var(--text-primary)]">99/100</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute -left-8 bottom-20 p-4 glass-panel rounded-2xl animate-bounce delay-300">
-            <div className="flex items-center gap-3">
-              <div className="icon-bubble text-[var(--accent-primary)] p-2 rounded-lg"><Bot size={20} /></div>
-              <div>
-                <div className="text-xs text-[var(--text-secondary)]">AI Integration</div>
-                <div className="font-bold text-[var(--text-primary)]">Active</div>
-              </div>
-            </div>
-          </div>
-
         </motion.div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default Hero;

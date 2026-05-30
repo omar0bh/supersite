@@ -1,16 +1,5 @@
 [
   {
-    "id": 1764519364954,
-    "timestamp": "11/30/2025, 5:16:04 PM",
-    "name": "ilyass daoudi",
-    "phone": "06606060606",
-    "description": "haha broker dropy fi bla bla bla",
-    "selectedFeatures": [],
-    "totalPrice": null,
-    "estimatedDelivery": null,
-    "createdAt": "2025-11-30T16:16:04.954Z"
-  },
-  {
     "id": 1764519443540,
     "timestamp": "11/30/2025, 5:17:23 PM",
     "name": "testing",
@@ -199,20 +188,45 @@
     "createdAt": "2025-12-15T23:35:12.487Z"
   },
   {
-    "id": 1765909363205,
-    "timestamp": "12/16/2025, 7:22:43 PM",
-    "name": "nonaaa",
-    "phone": "00000000000002",
-    "description": "Selected Options:\n• Advanced Animations (+400 DH)\n\nTotal Price: 2400 DH",
+    "id": 1771169242546,
+    "timestamp": "2/15/2026, 3:27:22 PM",
+    "name": "omar bouhanana",
+    "phone": "212688892894",
+    "description": "hhhhhhhhhhhhhhhhhhh",
+    "preferredContact": "email",
+    "email": "bouhananao8@gmail.com",
     "selectedFeatures": [
       {
         "id": "anim",
         "name": "Advanced Animations",
         "price": 400
+      },
+      {
+        "id": "chat",
+        "name": "AI Chatbot",
+        "price": 1200
+      },
+      {
+        "id": "lang",
+        "name": "Multi-language",
+        "price": 600
       }
     ],
-    "totalPrice": 2400,
+    "totalPrice": 4200,
     "estimatedDelivery": "5-7 Days",
-    "createdAt": "2025-12-16T18:22:43.511Z"
+    "createdAt": "2026-02-15T15:27:22.659Z"
+  },
+  {
+    "id": 1780182457190,
+    "timestamp": "5/31/2026, 12:07:37 AM",
+    "name": "lala 3icha",
+    "phone": "0989247753805",
+    "description": "bghitk t9adoli f assra3 wa9t",
+    "preferredContact": "whatsapp",
+    "email": "",
+    "selectedFeatures": [],
+    "totalPrice": 2000,
+    "estimatedDelivery": "5-7 Days",
+    "createdAt": "2026-05-30T23:07:37.321Z"
   }
 ]

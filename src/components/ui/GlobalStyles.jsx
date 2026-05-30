@@ -20,6 +20,7 @@ const GlobalStyles = () => (
       --pill-bg: rgba(15, 15, 15, 0.05);
       --glow-primary: 0 25px 65px rgba(30, 144, 255, 0.3);
       --section-bg: rgba(15, 15, 15, 0.04);
+      --hero-image-edge: 0 0 0 1px rgba(15, 15, 15, 0.06), 0 25px 50px -12px rgba(15, 15, 15, 0.12);
     }
 
     [data-theme="dark"] {
@@ -34,6 +35,7 @@ const GlobalStyles = () => (
       --pill-bg: rgba(224, 224, 224, 0.1);
       --glow-primary: 0 30px 80px rgba(30, 144, 255, 0.45);
       --section-bg: rgba(255, 255, 255, 0.02);
+      --hero-image-edge: 0 0 0 1px rgba(255, 255, 255, 0.04), 0 30px 60px -15px rgba(0, 0, 0, 0.5);
     }
 
     [data-theme="light"] {
@@ -48,10 +50,19 @@ const GlobalStyles = () => (
       --pill-bg: rgba(15, 15, 15, 0.05);
       --glow-primary: 0 25px 65px rgba(30, 144, 255, 0.25);
       --section-bg: rgba(15, 15, 15, 0.04);
+      --hero-image-edge: 0 0 0 1px rgba(15, 15, 15, 0.06), 0 25px 50px -12px rgba(15, 15, 15, 0.12);
     }
 
-    * {
-      transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    .hero-image-wrap {
+      box-shadow: var(--hero-image-edge);
+      border: none;
+      border-radius: 1.25rem;
+      background: var(--color-bg);
+    }
+
+    /* Smooth theme change: border, radius, shadow transition with light/dark */
+    body, .glass-panel, .surface-card, .surface-muted, .pill, .input-field, .theme-toggle, .gradient-border, .hero-image-wrap, [data-theme] {
+      transition: color 0.45s ease, background-color 0.45s ease, border-color 0.45s ease, box-shadow 0.45s ease, border-radius 0.45s ease;
     }
 
     body {
@@ -198,6 +209,16 @@ const GlobalStyles = () => (
 
     .animate-glow {
       animation: glow-pulse 4s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .float { animation: none; }
+      .animate-gradient, .animate-scan, .animate-glow, .hero-mesh { animation: none; }
     }
   `}</style>
 );

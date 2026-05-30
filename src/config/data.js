@@ -9,9 +9,12 @@ export const templates = [
     image: '/restoluxe.png',
     color: 'from-orange-500 to-red-500',
     desc: 'Digital menu & reservations.',
-    //subDemos: [
-    //  { id: 'r1', name: 'Oven Restaurant', url: 'https://ovenrestaurantlaayoune.com/', image: '/restoluxe.png' },
-    //]
+    visitors: '10K+',
+    conversion: '5.2%',
+    tech: ['React', 'Reservations', 'Laayoune'],
+    subDemos: [
+      { id: 'r1', name: 'Oven Restaurant', url: 'https://ovenrestaurantlaayoune.com/', image: '/restoluxe.png' },
+    ],
   },
   {
     id: 2,
@@ -21,9 +24,10 @@ export const templates = [
     color: 'from-blue-500 to-cyan-500',
     desc: 'Property listings with VR tour.',
     image: '/estatpro.png',
-    //subDemos: [
-    //  { id: 'e1', name: 'EstatePro', url: 'https://www.realtor.com/', image: '/estatpro.png' },
-    //]
+    visitors: '8K+',
+    conversion: '4.8%',
+    tech: ['Next.js', 'Immobilier', 'Tanger'],
+    subDemos: [],
   },
   {
     id: 3,
@@ -32,7 +36,11 @@ export const templates = [
     icon: Heart,
     image: '/medicine.png',
     color: 'from-pink-500 to-rose-500',
-    desc: 'Salon booking & gallery.'
+    desc: 'Clinic booking & gallery.',
+    visitors: '6K+',
+    conversion: '6.1%',
+    tech: ['Vite', 'Clinique', 'Marrakech'],
+    subDemos: [],
   },
   {
     id: 4,
@@ -41,7 +49,11 @@ export const templates = [
     icon: ShoppingBag,
     image: '/shopifyplus.png',
     color: 'from-emerald-500 to-teal-500',
-    desc: 'High-conversion store.'
+    desc: 'High-conversion store.',
+    visitors: '18K+',
+    conversion: '3.9%',
+    tech: ['Supabase', 'E-commerce', 'Casablanca'],
+    subDemos: [],
   },
   {
     id: 5,
@@ -50,7 +62,11 @@ export const templates = [
     icon: Monitor,
     image: '/saasdash.png',
     color: 'from-violet-500 to-purple-500',
-    desc: 'Modern software landing page.'
+    desc: 'Modern software landing page.',
+    visitors: '12K+',
+    conversion: '5.5%',
+    tech: ['Next.js', 'SaaS', 'Rabat'],
+    subDemos: [],
   },
   {
     id: 6,
@@ -59,17 +75,24 @@ export const templates = [
     icon: Briefcase,
     image: '/professional.png',
     color: 'from-gray-700 to-gray-900',
-    desc: 'Corporate & Professional Services.'
-  }
+    desc: 'Corporate & Professional Services.',
+    visitors: '9K+',
+    conversion: '4.2%',
+    tech: ['React', 'Corporate', 'Morocco'],
+    subDemos: [],
+  },
 ];
 
 export const featuresList = [
-  { id: 'cms', name: 'Admin Dashboard (CMS)', price: 1000 },
-  { id: 'seo', name: 'Advanced SEO', price: 500 },
-  { id: 'pay', name: 'Payment Gateway', price: 800 },
-  { id: 'lang', name: 'Multi-language', price: 600 },
-  { id: 'chat', name: 'AI Chatbot', price: 1200 },
-  { id: 'anim', name: 'Advanced Animations', price: 400 },
+  { id: 'cms', name: 'Admin Dashboard (CMS)', price: 1000, tooltip: 'Manage content, menus, and media without code.' },
+  { id: 'seo', name: 'Advanced SEO', price: 500, tooltip: 'Meta tags, sitemaps, and Google-friendly structure.' },
+  { id: 'pay', name: 'Payment Gateway', price: 800, tooltip: 'Stripe, CMI, or local payment integration.' },
+  { id: 'lang', name: 'Multi-language', price: 600, tooltip: 'French, Arabic, English — switch per user.' },
+  { id: 'chat', name: 'AI Chatbot', price: 1200, tooltip: 'Smart support bot trained on your services.' },
+  { id: 'anim', name: 'Advanced Animations', price: 400, tooltip: 'Scroll and hover animations for a premium feel.' },
+  { id: 'branding', name: 'Design & Branding Pack (Logo & Identity)', price: 1500, tooltip: 'Professional visual identity, logo assets, and brand guidelines.' },
+  { id: 'maintenance', name: 'Annual Maintenance & Support', price: 1200, tooltip: 'Security backups, monthly updates, and support retainers.' },
+  { id: 'google_ads', name: 'Google Ads & Traffic Campaign Setup', price: 1800, tooltip: 'Strategic keyword research, custom ads setup, and conversion tracking.' },
 ];
 
 

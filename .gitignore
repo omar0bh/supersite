@@ -29,3 +29,17 @@ config/secrets.js
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Private databases and local backups
+*-database.json
+*-database.json.backup
+test-syntax.js
+
+# Ignore private markdown files but keep standard README.md
+*.md
+!README.md
+
+ideas.md
+PROPOSAL.md
+DEPLOY-DREAMHOST.md
+*.md

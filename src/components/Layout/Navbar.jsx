@@ -2,19 +2,20 @@
 import React, { useEffect, useState } from 'react';
 import { Bot, Menu, Moon, Sun } from 'lucide-react';
 import Button from '../ui/Button';
-
-
+import { useLanguage } from '../../context/LanguageContext';
 
 const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
 
-  // Navigation Items - Admin removed for security (separate admin dashboard)
   const navItems = [
-    { name: 'Demos', id: 'demos' },
-    { name: 'Services', id: 'case-studies' },
-    { name: 'AI Tools', id: 'ai-tools' },
-    { name: 'Pricing', id: 'pricing' },
+    { name: t('nav.about'), id: 'about' },
+    { name: t('nav.services'), id: 'services' },
+    { name: t('nav.portfolio'), id: 'portfolio' },
+    { name: t('nav.demos'), id: 'demos' },
+    { name: t('nav.aiTools'), id: 'ai-tools' },
+    { name: t('nav.pricing'), id: 'pricing' },
   ];
 
   useEffect(() => {
@@ -57,15 +58,47 @@ const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
              </button>
            ))}
            {/* --- END FIX --- */}
-           <button onClick={onToggleTheme} className="theme-toggle">
-           {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
-           </button>
-           <Button onClick={() => handleNav('contact')} variant="neon" className="py-2 px-6 text-sm rounded-lg">
-           Get Quote
-           </Button>
+            {/* Bilingual Language Switcher Toggle */}
+            <div className="flex items-center gap-1 border border-[var(--border-color)] bg-[var(--surface-muted)] rounded-lg p-0.5 text-[10px] font-bold shadow-inner mr-2">
+              <button 
+                onClick={() => setLanguage('FR')} 
+                className={`px-1.5 py-0.5 rounded transition-all ${language === 'FR' ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+              >
+                FR
+              </button>
+              <button 
+                onClick={() => setLanguage('EN')} 
+                className={`px-1.5 py-0.5 rounded transition-all ${language === 'EN' ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+              >
+                EN
+              </button>
+            </div>
+
+            <button onClick={onToggleTheme} className="theme-toggle">
+            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+            <Button onClick={() => handleNav('contact')} variant="neon" className="py-2 px-6 text-sm rounded-lg">
+            {t('nav.getQuote')}
+            </Button>
+
           </div>
 
           <div className="md:hidden flex items-center gap-3">
+            {/* Mobile Bilingual Switcher */}
+            <div className="flex items-center gap-1 border border-[var(--border-color)] bg-[var(--surface-muted)] rounded-lg p-0.5 text-[9px] font-bold shadow-inner">
+              <button
+                onClick={() => setLanguage('FR')}
+                className={`px-1.5 py-0.5 rounded transition-all ${language === 'FR' ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-secondary)]'}`}
+              >
+                FR
+              </button>
+              <button
+                onClick={() => setLanguage('EN')}
+                className={`px-1.5 py-0.5 rounded transition-all ${language === 'EN' ? 'bg-[var(--accent-primary)] text-white' : 'text-[var(--text-secondary)]'}`}
+              >
+                EN
+              </button>
+            </div>
            <button onClick={onToggleTheme} className="theme-toggle px-3 py-2">
            {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
            </button>
@@ -88,7 +121,7 @@ const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
            ))}
            {/* --- END FIX --- */}
            <Button onClick={() => handleNav('contact')} variant="primary" className="w-full text-center">
-           Get Quote
+           {t('nav.getQuote')}
          </Button>
       </div>
      )}
