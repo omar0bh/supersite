@@ -39,9 +39,7 @@ const Navbar = ({ onNavigate, theme = 'dark', onToggleTheme }) => {
     >
       <div className="container mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center gap-2">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-lg shadow-violet-500/30 bg-gradient-to-br from-[var(--accent-primary)] to-[var(--accent-secondary)]">
-             <Bot size={24} />
-             </div>
+             <img src="/logo.png" alt="SuperSite Premium Logo" className="w-10 h-10 rounded-xl shadow-lg shadow-cyan-500/25 object-cover" />
            <span className="text-xl font-bold tracking-tight text-[var(--text-primary)]">Super<span className="text-[var(--accent-primary)]">Site</span></span>
          </div>
 

@@ -185,7 +185,8 @@
     "selectedFeatures": [],
     "totalPrice": 2000,
     "estimatedDelivery": "5-7 Days",
-    "createdAt": "2025-12-15T23:35:12.487Z"
+    "createdAt": "2025-12-15T23:35:12.487Z",
+    "status": "completed"
   },
   {
     "id": 1771169242546,
@@ -214,7 +215,8 @@
     ],
     "totalPrice": 4200,
     "estimatedDelivery": "5-7 Days",
-    "createdAt": "2026-02-15T15:27:22.659Z"
+    "createdAt": "2026-02-15T15:27:22.659Z",
+    "status": "won"
   },
   {
     "id": 1780182457190,
@@ -227,7 +229,8 @@
     "selectedFeatures": [],
     "totalPrice": 2000,
     "estimatedDelivery": "5-7 Days",
-    "createdAt": "2026-05-30T23:07:37.321Z"
+    "createdAt": "2026-05-30T23:07:37.321Z",
+    "status": "proposal_sent"
   },
   {
     "id": 1780183077617,
@@ -287,7 +290,7 @@
     "totalPrice": 11000,
     "estimatedDelivery": "7-10 Days",
     "createdAt": "2026-05-30T23:17:57.698Z",
-    "status": "new",
-    "notes": ""
+    "status": "contacted",
+    "notes": "bdir "
   }
 ]
