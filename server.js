@@ -40,7 +40,7 @@ app.use(helmet({
       styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
       imgSrc: ["'self'", "data:", "https:"],
       fontSrc: ["'self'", "data:", "https://fonts.gstatic.com"],
-      connectSrc: ["'self'", "https://supersite-b36dcfb401af.herokuapp.com", "wss:", "ws:"]
+      connectSrc: ["'self'", "https://supersite-b48c.onrender.com", "wss:", "ws:"]
     },
   },
   crossOriginEmbedderPolicy: false,

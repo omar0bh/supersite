@@ -161,8 +161,8 @@ const Contact = () => {
       const errorString = String(error.message || error).toLowerCase();
 
       if (errorString.includes('failed to fetch') || errorString.includes('networkerror') || error.name === 'TypeError') {
-        if (API_ENDPOINTS.SAVE_OFFER && API_ENDPOINTS.SAVE_OFFER.includes('herokuapp.com') && window.location.hostname === 'localhost') {
-          errorMessage = 'CORS Error: Using Heroku URL from localhost. For local development, make sure your .env has REACT_APP_API_URL=http://localhost:3003 and restart the app.';
+        if (API_ENDPOINTS.SAVE_OFFER && API_ENDPOINTS.SAVE_OFFER.includes('onrender.com') && window.location.hostname === 'localhost') {
+          errorMessage = 'CORS Error: Using Render URL from localhost. For local development, make sure your .env has REACT_APP_API_URL=http://localhost:3003 and restart the app.';
         } else if (API_ENDPOINTS.SAVE_OFFER && API_ENDPOINTS.SAVE_OFFER.includes('localhost')) {
           errorMessage = language === 'FR'
             ? 'Connexion au serveur impossible. Lancez le serveur : npm run server'
@@ -234,8 +234,8 @@ const Contact = () => {
       const errorString = String(error.message || error).toLowerCase();
 
       if (errorString.includes('failed to fetch') || errorString.includes('networkerror') || error.name === 'TypeError') {
-        if (API_ENDPOINTS.SAVE_FEEDBACK.includes('herokuapp.com') && window.location.hostname === 'localhost') {
-          errorMessage = 'CORS Error: Using Heroku URL from localhost.';
+        if (API_ENDPOINTS.SAVE_FEEDBACK.includes('onrender.com') && window.location.hostname === 'localhost') {
+          errorMessage = 'CORS Error: Using Render URL from localhost.';
         } else if (API_ENDPOINTS.SAVE_FEEDBACK.includes('localhost')) {
           errorMessage = language === 'FR'
             ? 'Impossible de se connecter au serveur backend.'

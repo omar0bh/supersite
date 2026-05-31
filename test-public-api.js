@@ -1,4 +1,4 @@
-const url = 'https://supersite-b36dcfb401af.herokuapp.com/api/save-feedback';
+const url = 'https://supersite-b48c.onrender.com/api/save-feedback';
 
 const feedback = {
     name: "Test User",
