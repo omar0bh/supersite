@@ -1,6 +1,6 @@
 // Single source for contact & company info — update here to change site-wide
 export const CONTACT = {
-  whatsapp: '+212761551686',
+  whatsapp: '+212761551689',
   phone: '+212761551689',
   email: 'SuperSite@SuperSite.ma',
   address: 'Casablanca, Morocco',

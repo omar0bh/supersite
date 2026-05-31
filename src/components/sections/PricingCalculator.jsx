@@ -93,7 +93,7 @@ const PricingCalculator = ({ onContact }) => {
         `I'd like to book a free consultation to discuss starting the project!`;
 
     const encodedMsg = encodeURIComponent(msg);
-    window.open(`https://wa.me/212761551686?text=${encodedMsg}`, '_blank');
+    window.open(`https://wa.me/212761551689?text=${encodedMsg}`, '_blank');
   };
 
   const handleDownloadProposal = () => {
@@ -251,7 +251,7 @@ const PricingCalculator = ({ onContact }) => {
           <div class="party-details">
             <div class="party-title">${language === 'FR' ? "PRESTATAIRE" : "PROVIDER"}</div>
             <div class="party-name">${language === 'FR' ? "Agence Digitale SuperSite" : "SuperSite Digital Agency"}</div>
-            <div style="color: #64748b; font-size: 14px; margin-top: 4px;">Casablanca, Maroc<br/>Email: contact@supersite.ma<br/>WhatsApp: +212 761-551686</div>
+            <div style="color: #64748b; font-size: 14px; margin-top: 4px;">Casablanca, Maroc<br/>Email: contact@supersite.ma<br/>WhatsApp: +212 761-551689</div>
           </div>
           <div class="party-details">
             <div class="party-title">${language === 'FR' ? "BÉNÉFICIAIRE" : "BENEFICIARY"}</div>
