@@ -95,6 +95,15 @@ const strictLimiter = rateLimit({
 
 app.use('/api/', apiLimiter);
 
+// Root Status Route
+app.get('/', (req, res) => {
+  res.status(200).json({
+    status: 'online',
+    message: 'Supertech API Server is running successfully.',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Input sanitization helper
 const sanitizeInput = (str) => {
   if (typeof str !== 'string') return '';
