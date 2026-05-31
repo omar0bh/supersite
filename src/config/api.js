@@ -4,7 +4,7 @@
 // API Configuration
 // Automatically detect development vs production
 const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const defaultUrl = isDevelopment ? 'http://localhost:3000' ;
+const defaultUrl = isDevelopment ? 'http://localhost:3003' : 'http://localhost:3000';
 const baseUrl = process.env.REACT_APP_API_URL || defaultUrl;
 // Remove trailing slash to prevent double slashes
 export const API_BASE_URL = baseUrl.replace(/\/+$/, '');
